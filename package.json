@@ -1,11 +1,11 @@
 {
   "name": "figma2css-app",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "figma2css-app.js",
   "bin": "figma2css-app.js",
   "scripts": {
-    "start": "node ./index.js",
+    "start": "node ./figma2css-app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
