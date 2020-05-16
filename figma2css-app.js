@@ -6,12 +6,23 @@ const express = require('express'),
   open = require('open'),
   program = require('commander');
 
+const fetchProject = require('figmafetch-module')
+
 const runServer = () => {
   app.use(express.json())
     .use(bodyParser.json())
 
   app.get('/', function (req, res) {
     res.send('<p>The frontend will live here!</p>');
+  })
+
+  app.get('/data', async function (req, res) {
+    let id = 'YZkG7swHVcXXJ6gA5PfLuNzw'
+    let token = '12606-e447b778-09cc-4bd3-91e8-843146de402d';
+    let data = await fetchProject(id, token);
+    data = data;
+    data['headers'] = { token: token, id: id };
+    res.send(data);
   })
 
   app.listen(4200, function () {
@@ -28,5 +39,3 @@ program
 });
 
 program.parse(process.argv);
-
-
