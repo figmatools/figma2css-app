@@ -33,7 +33,7 @@ const runServer = () => {
     }
   });
 
-  const findElement = (item, id) => {
+  const findElement = (item, id) => { 
     let result = null;
     if(!item.children) return null;
     for(let child of item.children) {
