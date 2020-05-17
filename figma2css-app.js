@@ -33,7 +33,7 @@ const runServer = () => {
     res.send(figmaData);
   });
 
-  const findElement = (item, id) => { 
+  const findElement = (item, id) => {
     let result = null
     if(!item.children) return null;
     for(let child of item.children) {
@@ -46,7 +46,7 @@ const runServer = () => {
       }
     }
     return result
-  } 
+  }
 
   app.get('/css', async function (req, res) {
     let data = await fs.readFileSync('./data', 'utf-8')

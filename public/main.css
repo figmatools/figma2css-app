@@ -139,3 +139,22 @@ main {
 .auth-form button:focus {
     box-shadow: 0 0 0 0.2rem rgba(40,167,69,.5);
 }
+
+#treeview ul{
+    list-style: square inside;
+    text-align: left;
+    padding-left: 10px;
+}
+
+#treeview .accordionControl {
+    cursor: pointer;
+}
+
+#treeview li:not(.expanded) {
+    height: 0;
+    transition: all 0.3s ease;
+}
+
+#treeview li.expanded {
+    height: auto;
+}
