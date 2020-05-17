@@ -1,6 +1,6 @@
 node_modules
 .idea
-./public/svelte-bundle.css
-./public/svelte-bundle.js
-./public/svelte-bundle.css.map
-./public/svelte-bundle.js.map
+public/svelte-bundle.css
+public/svelte-bundle.js
+public/svelte-bundle.css.map
+public/svelte-bundle.js.map

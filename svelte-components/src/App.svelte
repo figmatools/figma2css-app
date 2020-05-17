@@ -10,55 +10,12 @@
 		ajax.send();
 		ajax.onreadystatechange = () => {
 			if (ajax.readyState === 4 && ajax.status === 200) {
-				result = generateTreeview(JSON.parse(ajax.responseText));
-			}else {
-				result = "Request Error! Please check file ID and access token :)";
+				result = JSON.parse(ajax.responseText);
+			} else if (ajax.readyState === 4 && ajax.status !== 200) {
+				result = {msg: "Request Error! Please check file ID and access token :)", type: "ERROR"};
 			}
 		}
 	}
-
-	const generateTreeview = (data) => {
-		let treeString = `<div id="tree">`;
-		if(!data) {
-			console.log("Error building treeview: invalid data");
-			return;
-		}
-
-		let root = data.document;
-		let children = root.children;
-		if(children) {
-			treeString += `<ul>`;
-			for(let child of children) {
-				treeString += generateTreeviewRecursive(child);
-			}
-			treeString += `</ul>`;
-		}
-		treeString += `</div>`;
-
-		return treeString;
-	}
-
-	const generateTreeviewRecursive = (child) => {
-		let treeString = `<li data-child-id="${child.id}" data-child-type="${child.type}"><span class="accordionControl" on:click={toggleChildrenDisplay(this)}>${child.name}</span>`
-		let children = child.children;
-		if(children) {
-			treeString += `<ul>`;
-			for(let child of children) {
-				treeString += generateTreeviewRecursive(child);
-			}
-			treeString += `</ul>`;
-		}
-		treeString += `</li>`
-
-		return treeString;
-	}
-
-	const toggleChildrenDisplay = (element) => {
-		let childrenNodes = element.parentNode.querySelectorAll("li");
-		for(let child of childrenNodes) {
-			child.classList.toggle("expanded");
-		}
-	};
 
 </script>
 
@@ -80,7 +37,7 @@
 				</div>
 				<button type="submit" id="generateButton">Generate!</button>
 			</form>
-			<TreeView bind:tree={result}/>
+			<TreeView bind:treeData={result}/>
 		</main>
 		<footer>
 
