@@ -9,12 +9,49 @@ window.onload = () => {
         ajax.open("GET", `/data?fileId=${fileId}&figmaAccessToken=${accessToken}`, true);
         ajax.send();
         ajax.onreadystatechange = () => {
-            if (ajax.readyState === 4 && ajax.responseText.status === 200) {
-                document.getElementById("testResults").innerText = ajax.responseText;
+            console.log(ajax.responseText);
+            if (ajax.readyState === 4 && ajax.status === 200) {
+                document.getElementById("treeview").innerHTML = generateTreeview(JSON.parse(ajax.responseText));
             }
             else {
-                document.getElementById("testResults").innerText = "Request Error!";
+                document.getElementById("treeview").innerHTML = "Request Error! Please check file ID and access token :)";
             }
         }
     });
 };
+
+const generateTreeview = (data) => {
+    let treeString = `<div id="tree">`;
+    if(!data) {
+        console.log("Error building treeview: invalid data");
+        return;
+    }
+
+    let root = data.document;
+    let children = root.children;
+    if(children) {
+        treeString += `<ul>`;
+        for(let child of children) {
+            treeString += generateTreeviewRecursive(child);
+        }
+        treeString += `</ul>`;
+    }
+    treeString += `</div>`;
+
+    return treeString;
+}
+
+const generateTreeviewRecursive = (child) => {
+    let treeString = `<li data-child-id="${child.id}" data-child-type="${child.type}">${child.name}`
+    let children = child.children;
+    if(children) {
+        treeString += `<ul>`;
+        for(let child of children) {
+            treeString += generateTreeviewRecursive(child);
+        }
+        treeString += `</ul>`;
+    }
+    treeString += `</li>`
+
+    return treeString;
+}
