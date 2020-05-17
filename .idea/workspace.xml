@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="20afbefc-7bac-422e-80fb-04871bcb7916" name="Default Changelist" comment="" />
+    <list default="true" id="20afbefc-7bac-422e-80fb-04871bcb7916" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/figma2css-app.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data" beforeDir="false" afterPath="$PROJECT_DIR$/data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/figma2css-app.js" beforeDir="false" afterPath="$PROJECT_DIR$/figma2css-app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/svelte-bundle.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/svelte-bundle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/svelte-bundle.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/svelte-bundle.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/svelte-bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/svelte-bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/svelte-bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/svelte-bundle.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/svelte-components/src/App.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/svelte-components/src/App.svelte" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Svelte Component" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -15,11 +37,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-6" />
-    <option name="width" value="1078" />
-    <option name="height" value="584" />
   </component>
   <component name="ProjectId" id="1c30pZzfITzqbqDDKmyA0ECzHfT" />
   <component name="ProjectLevelVcsManager">
@@ -42,6 +59,23 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Projects\figma2css-app\public" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -71,9 +105,33 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state width="1579" height="222" key="GridCell.Tab.0.bottom" timestamp="1589744570706">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1579" height="222" key="GridCell.Tab.0.bottom/1600.-78.1920.1040/0.0.1600.860@0.0.1600.860" timestamp="1589744570706" />
+    <state width="1579" height="222" key="GridCell.Tab.0.center" timestamp="1589744570705">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1579" height="222" key="GridCell.Tab.0.center/1600.-78.1920.1040/0.0.1600.860@0.0.1600.860" timestamp="1589744570705" />
+    <state width="1579" height="222" key="GridCell.Tab.0.left" timestamp="1589744570705">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1579" height="222" key="GridCell.Tab.0.left/1600.-78.1920.1040/0.0.1600.860@0.0.1600.860" timestamp="1589744570705" />
+    <state width="1579" height="222" key="GridCell.Tab.0.right" timestamp="1589744570705">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1579" height="222" key="GridCell.Tab.0.right/1600.-78.1920.1040/0.0.1600.860@0.0.1600.860" timestamp="1589744570705" />
+    <state x="579" y="141" key="RollbackChangesDialog" timestamp="1589749408162">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="579" y="141" key="RollbackChangesDialog/1600.-78.1920.1040/0.0.1600.860@0.0.1600.860" timestamp="1589749408162" />
     <state x="461" y="165" key="SettingsEditor" timestamp="1589742404310">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1589742404310" />
+    <state x="581" y="143" key="git4idea.branch.GitSmartOperationDialog" timestamp="1589744458298">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="581" y="143" key="git4idea.branch.GitSmartOperationDialog/1600.-78.1920.1040/0.0.1600.860@0.0.1600.860" timestamp="1589744458298" />
   </component>
 </project>
