@@ -7,7 +7,7 @@
   "scripts": {
     "start": "concurrently --kill-others \"npm run svelte-start\" \"npm run server-start\"",
     "svelte-start": "cd svelte-components && npm run dev",
-    "server-start": "sleep 1s && node figma2css-app.js",
+    "server-start": "node figma2css-app.js",
     "build": "cd svelte-components && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
