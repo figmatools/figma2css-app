@@ -9,7 +9,6 @@ window.onload = () => {
         ajax.open("GET", `/data?fileId=${fileId}&figmaAccessToken=${accessToken}`, true);
         ajax.send();
         ajax.onreadystatechange = () => {
-            console.log(ajax.responseText);
             if (ajax.readyState === 4 && ajax.status === 200) {
                 document.getElementById("treeview").innerHTML = generateTreeview(JSON.parse(ajax.responseText));
             }
@@ -42,7 +41,7 @@ const generateTreeview = (data) => {
 }
 
 const generateTreeviewRecursive = (child) => {
-    let treeString = `<li data-child-id="${child.id}" data-child-type="${child.type}">${child.name}`
+    let treeString = `<li data-child-id="${child.id}" data-child-type="${child.type}"><span class="accordionControl" onclick="toggleChildrenDisplay(this)">${child.name}</span>`
     let children = child.children;
     if(children) {
         treeString += `<ul>`;
@@ -54,4 +53,11 @@ const generateTreeviewRecursive = (child) => {
     treeString += `</li>`
 
     return treeString;
+}
+
+const toggleChildrenDisplay = (element) => {
+    let childrenNodes = element.parentNode.querySelectorAll("li");
+    for(let child of childrenNodes) {
+        child.classList.toggle("expanded");
+    }
 }

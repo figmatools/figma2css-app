@@ -3,12 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="20afbefc-7bac-422e-80fb-04871bcb7916" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data" beforeDir="false" afterPath="$PROJECT_DIR$/data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/figma2css-app.js" beforeDir="false" afterPath="$PROJECT_DIR$/figma2css-app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/svelte-bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/svelte-bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/svelte-bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/svelte-bundle.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/svelte-components/src/App.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/svelte-components/src/App.svelte" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
