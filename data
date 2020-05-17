@@ -1987,6 +1987,169 @@
               "a": 1
             },
             "effects": []
+          },
+          {
+            "id": "18:2",
+            "name": "test",
+            "type": "FRAME",
+            "blendMode": "PASS_THROUGH",
+            "children": [
+              {
+                "id": "18:5",
+                "name": ".my-button",
+                "type": "GROUP",
+                "blendMode": "PASS_THROUGH",
+                "children": [
+                  {
+                    "id": "18:3",
+                    "name": ".my-button",
+                    "type": "RECTANGLE",
+                    "blendMode": "PASS_THROUGH",
+                    "absoluteBoundingBox": {
+                      "x": 1055,
+                      "y": 1841,
+                      "width": 128,
+                      "height": 32
+                    },
+                    "constraints": {
+                      "vertical": "TOP",
+                      "horizontal": "LEFT"
+                    },
+                    "fills": [
+                      {
+                        "blendMode": "NORMAL",
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.04895836114883423,
+                          "g": 0.08616665750741959,
+                          "b": 0.9791666865348816,
+                          "a": 1
+                        }
+                      }
+                    ],
+                    "strokes": [],
+                    "strokeWeight": 1,
+                    "strokeAlign": "INSIDE",
+                    "effects": []
+                  },
+                  {
+                    "id": "18:4",
+                    "name": ".my-button",
+                    "type": "TEXT",
+                    "blendMode": "PASS_THROUGH",
+                    "absoluteBoundingBox": {
+                      "x": 1101,
+                      "y": 1850,
+                      "width": 35,
+                      "height": 14
+                    },
+                    "constraints": {
+                      "vertical": "TOP",
+                      "horizontal": "LEFT"
+                    },
+                    "fills": [
+                      {
+                        "blendMode": "NORMAL",
+                        "type": "SOLID",
+                        "color": {
+                          "r": 1,
+                          "g": 0.987500011920929,
+                          "b": 0.987500011920929,
+                          "a": 1
+                        }
+                      }
+                    ],
+                    "strokes": [],
+                    "strokeWeight": 1,
+                    "strokeAlign": "OUTSIDE",
+                    "effects": [],
+                    "characters": "button",
+                    "style": {
+                      "fontFamily": "Roboto",
+                      "fontPostScriptName": null,
+                      "fontWeight": 400,
+                      "fontSize": 12,
+                      "textAlignHorizontal": "LEFT",
+                      "textAlignVertical": "TOP",
+                      "letterSpacing": 0,
+                      "lineHeightPx": 14.0625,
+                      "lineHeightPercent": 100,
+                      "lineHeightUnit": "INTRINSIC_%"
+                    },
+                    "characterStyleOverrides": [],
+                    "styleOverrideTable": {}
+                  }
+                ],
+                "absoluteBoundingBox": {
+                  "x": 1055,
+                  "y": 1841,
+                  "width": 128,
+                  "height": 32
+                },
+                "constraints": {
+                  "vertical": "TOP",
+                  "horizontal": "LEFT"
+                },
+                "clipsContent": false,
+                "background": [],
+                "fills": [],
+                "strokes": [],
+                "strokeWeight": 1,
+                "strokeAlign": "INSIDE",
+                "backgroundColor": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 0
+                },
+                "effects": []
+              }
+            ],
+            "absoluteBoundingBox": {
+              "x": 1000,
+              "y": 1807,
+              "width": 524,
+              "height": 141
+            },
+            "constraints": {
+              "vertical": "TOP",
+              "horizontal": "LEFT"
+            },
+            "clipsContent": true,
+            "background": [
+              {
+                "blendMode": "NORMAL",
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "fills": [
+              {
+                "blendMode": "NORMAL",
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "strokeAlign": "INSIDE",
+            "backgroundColor": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "effects": []
           }
         ],
         "backgroundColor": {
@@ -2014,9 +2177,9 @@
     }
   },
   "name": "Figma-Tools",
-  "lastModified": "2020-05-16T20:45:12.571948Z",
+  "lastModified": "2020-05-17T20:50:23.107465Z",
   "thumbnailUrl": "https://s3-alpha-sig.figma.com/thumbnails/0f400f27-19af-4413-8043-62e90c1c0d3a?Expires=1590364800&Signature=bY67pX~5IghIkdOfrrW4-lQ7LyE987O1ISkk63XkwH8YksGpwIm10Qs0DQ3TWDEH83Aj8WY8hZ7A2pcS6JWhzfqA2ZNcupJQqX69Fd5P5Bb9cpI5V7UCDZm2uvnuOKcj~WY5fnZ~9drMd13d6ykyyWlTT-8YKH7v9HtFUao6vvI8My1X~L3axboNGknnLhzV0kI87lf90gppahLubkiewFXlRTG0RNFgFs6osTGqvOEvU2zZQOcbwdeJcq8HQHLUSwAyNa6ZWeVZr9Wr1TyUvFihcKWku0~66RxGVEmjYJkF9A9K87TCRxS7mJ0feyGoHhwzkghzkzUT6JD4FrI3TQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA",
-  "version": "327991212",
+  "version": "328461268",
   "role": "owner",
   "headers": {
     "token": "12606-e447b778-09cc-4bd3-91e8-843146de402d",

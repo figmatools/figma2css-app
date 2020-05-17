@@ -2,8 +2,8 @@
     export let tree = '';
 </script>
 
-<div>
-    {tree}
+<div id="treeview">
+    {@html tree}
 </div>
 
 <style>
