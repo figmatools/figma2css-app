@@ -6,7 +6,8 @@ const express = require('express'),
   open = require('open'),
   program = require('commander'),
   path = require('path'),
-  fs = require('fs');
+  fs = require('fs'),
+  transformCss = require('figma2css-module')
 
 const fetchProject = require('figmafetch-module');
 
@@ -28,7 +29,7 @@ const runServer = () => {
     }
     let figmaData = await fetchProject(id, token);
     figmaData['headers'] = { token: token, id: id };
-    fs.writeFileSync('./data', JSON.stringify(figmaData, null, 2), 'utf-8')
+    fs.writeFileSync('./data', JSON.stringify(figmaData), 'utf-8')
     res.send(figmaData);
   });
 
@@ -50,9 +51,24 @@ const runServer = () => {
   app.get('/css', async function (req, res) {
     let data = await fs.readFileSync('./data', 'utf-8')
     data = JSON.parse(data)
-    let result = findElement(data.document, '1:5')
-    console.log('result: ', result)
-    res.send(result);
+    let ids = req.query.ids
+    if(!ids) {
+      res.send('ids empty!')
+      return
+    }
+    ids = ids.split(',')
+    let resultFilePath = req.query.filePath
+    if(!resultFilePath) {
+      res.send('resultPath empty!')
+      return
+    }
+    let finalCss = ''
+    for(let id of ids) {
+      let element = findElement(data.document, id)
+      finalCss += transformCss(element)
+    }
+    fs.writeFileSync(resultFilePath, finalCss, 'utf-8')
+    res.send(finalCss);
   });
 
   app.listen(4200, function () {
