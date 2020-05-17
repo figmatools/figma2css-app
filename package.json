@@ -5,7 +5,10 @@
   "main": "figma2css-app.js",
   "bin": "figma2css-app.js",
   "scripts": {
-    "start": "node ./figma2css-app.js",
+    "start": "concurrently --kill-others \"npm run svelte-start\" \"npm run server-start\"",
+    "svelte-start": "cd svelte-components && npm run dev",
+    "server-start": "sleep 1s && node figma2css-app.js",
+    "build": "cd svelte-components && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,5 +20,8 @@
     "express": "^4.17.1",
     "figmafetch-module": "^1.0.0",
     "open": "^7.0.4"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0"
   }
 }
