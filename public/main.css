@@ -76,85 +76,25 @@ main {
     color: rgba(255, 255, 255, 0.61);
 }
 
-.auth-form {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    align-items: center;
-    align-content: center;
-}
+/* TODO: rewrite TreeView.svelte to use Sveltes HTML template language to render the tree. For now, Treeviews CSS has to be
+    global in order to work.*/
 
-.label-input-container {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    padding: 5px 30px;
-}
-
-.label-input-container input {
-    border: 0;
-    border-bottom: 1px solid var(--light-grey);
-    color: var(--font-black);
-    outline: none;
-    padding: 5px 10px;
-    font-size: 16px;
-}
-
-.label-input-container label {
-    margin-bottom: 5px;
-    font-size: 20px;
-}
-
-.auth-form button {
-    font-size: 20px;
-    line-height: 20px;
-    padding: 14px 24px;
-    margin-bottom: 0;
-    display: inline-block;
-    text-decoration: none;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    border: 1px solid transparent;
-    background-color: #28a745;
-    color: white;
-    border-radius: 5px;
-    transition: all 0.6s ease;
-    margin-top: 20px;
-}
-
-.auth-form button:hover {
-    background-color: #218838;
-    border-color: #1e7e34;
-}
-
-.auth-form button:focus {
-    box-shadow: 0 0 0 0.2rem rgba(40,167,69,.5);
-}
-
-#treeview ul{
+#tree ul{
     list-style: square inside;
     text-align: left;
     padding-left: 10px;
 }
 
-#treeview .accordionControl {
+#tree .accordionControl {
     cursor: pointer;
 }
 
-#treeview li:not(.expanded) {
+#tree li:not(.expanded) {
     height: 0;
     transition: all 0.3s ease;
 }
 
-#treeview li.expanded {
+#tree li.expanded {
     height: auto;
 }
+

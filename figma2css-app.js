@@ -34,7 +34,15 @@ const runServer = () => {
     }
   });
 
-  const findElement = (item, id) => { 
+  app.get('/cached-credentials', async (req, res) => {
+    try {
+      let data = JSON.parse(fs.readFileSync('./data'));
+      data = data['headers'];
+      res.send(data);
+    } catch (e) {}
+  });
+
+  const findElement = (item, id) => {
     let result = null;
     if(!item.children) return null;
     for(let child of item.children) {
