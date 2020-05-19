@@ -21,13 +21,15 @@ const runServer = () => {
   });
 
   app.get('/data', async function (req, res) {
-    // ?figmaAccessToken=[token]&fileId=[id]
+    // ?figmaAccessToken=[token]&fileId=[id]&nodeIds=1:36,1:24
     let id = req.query.fileId;
     let token = req.query.figmaAccessToken;
+    let nodeIds = 
+      req.query.nodeIds ? req.query.nodeIds.split(',') : []
     if(!id || !token) {
       res.status(500).send("Error");
     }else{
-      let figmaData = await fetchProject(id, token);
+      let figmaData = await fetchProject(id, token, nodeIds);
       figmaData['headers'] = { token: token, id: id };
       fs.writeFileSync('./data', JSON.stringify(figmaData, null, 2), 'utf-8');
       res.send(figmaData);
