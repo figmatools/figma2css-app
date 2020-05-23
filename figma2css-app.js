@@ -7,7 +7,10 @@ const express = require('express'),
   program = require('commander'),
   path = require('path'),
   fs = require('fs'),
-  transformCss = require('figma2css-module')
+  transformCss = require('figma2css-module'),
+  reload = require('reload'),
+  watchFront = require('./watch-front')
+
 
 const fetchProject = require('figmafetch-module');
 
@@ -27,7 +30,7 @@ const runServer = () => {
     let nodeIds = 
       req.query.nodeIds ? req.query.nodeIds.split(',') : []
     if(!id || !token) {
-      res.status(500).send("Error");
+      res.status(500).send("user token and fileId needed!!!");
     }else{
       let figmaData = await fetchProject(id, token, nodeIds);
       figmaData['headers'] = { token: token, id: id };
@@ -82,16 +85,23 @@ const runServer = () => {
     res.send(finalCss);
   });
 
-  app.listen(4200, function () {
-    console.log('fake server running on 4200!');
-  });
-
+  reload(app).then(function (reloadReturned) {
+    app.listen(4200, function () {
+      console.log('Web server listening on port 4200!')
+    })
+  }).catch(function (err) {
+    console.error('Reload could not start, could not start server/sample app', err)
+  })
   //open('http://localhost:4200/')
 };
 
 program
   .description('run server!')
+  .option('-d, --dev', 'devmod watch and reload')
   .action(async function(cmd) {
+  console.log('devmod: ', cmd.dev)
+  if(cmd.dev) 
+    watchFront()  
   runServer()
 });
 

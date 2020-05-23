@@ -48,7 +48,7 @@
 <main>
 	<div class="container">
 		<header>
-			<div class="title">Figma2CSS App</div>
+			<div class="title">Figma2CSS</div>
 			<div class="subtitle">Generate CSS from Figma Layouts!</div>
 		</header>
 		<main>
