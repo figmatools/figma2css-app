@@ -1,6 +1,6 @@
 {
   "name": "figma2css-app",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "",
   "main": "figma2css-app.js",
   "bin": "figma2css-app.js",
