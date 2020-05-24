@@ -104,6 +104,19 @@ main {
     transition: all 0.5s ease;
 }
 
+#tree .selectionControl {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    vertical-align: middle;
+    border: 1px solid var(--main-color);
+    border-radius: 5px;
+}
+
+#tree li[data-selected="true"] > .selectionControl {
+    background-color: var(--secondary-color);
+}
+
 /* Default Icon */
 #tree li:before {
     content: '🗎';
@@ -141,19 +154,12 @@ main {
 
 #tree span{
     position: relative;
-    display: inline-block;
-    width: 90%;
+    padding: 0 2px;
+    overflow: hidden;
 }
 
-#tree li[data-selected='true'] > span::before {
-    content: '';
-    position:absolute;
-    background-color: rgba(105, 0, 0, 0.25);
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+#tree li[data-selected='true'] > span {
+    font-weight: bold;
 }
 
 #tree li > span:not([data-selected-count='0'])::after{
