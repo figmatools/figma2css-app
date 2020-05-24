@@ -96,10 +96,22 @@
         }
         if (element.parentNode.dataset.selected  == 'true'){
             element.parentNode.dataset.selected = ('false');
-            span.dataset.selectedCount = parseInt(span.dataset.selectedCount)-1;
+            propagateSelectedCount(element, -1)
         }else{
             element.parentNode.dataset.selected = ('true');
-            span.dataset.selectedCount = parseInt(span.dataset.selectedCount)+1;
+            propagateSelectedCount(element, 1)
+        }
+    };
+
+    const propagateSelectedCount = (element, value) =>{
+        let ul = element.closest('ul');
+        if(ul){
+            let span = ul.parentElement.firstChild;
+            if(!span.dataset.selectedCount){
+                span.dataset.selectedCount = "0";
+            }
+            span.dataset.selectedCount = parseInt(span.dataset.selectedCount)+value;
+            propagateSelectedCount(ul.parentElement,value)
         }
     };
 
