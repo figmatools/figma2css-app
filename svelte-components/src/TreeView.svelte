@@ -3,12 +3,12 @@
     export let requestLoading = '';
     import { afterUpdate, beforeUpdate } from 'svelte';
     let tree = '';
+    let selectedNodes = [];
 
     let defaultLineHeight = 31; // in px
     let defaultCollapseTransitionTime = 500; // in milliseconds
 
     const generateTreeview = (data) => {
-        console.log("Generated");
         tree = '';
         let treeString = `<div id="tree">`;
         if(!data) {
@@ -35,11 +35,12 @@
 
     const generateTreeviewRecursive = (child) => {
         // TODO: only add accordionControl if has children;
-        // TODO: ul list style is none, add image before li according to data-child-type (map child types first);
         // TODO: accordion-control should be a downward arrow, add span before for child.name;
         // TODO: selectable childs for CSS generation;
         let children = child.children;
-        let treeString = `<li class="${children ? 'isParent' : ''}" data-childrenAmmount="${children ? children.length.toString() : '0'}" data-child-id="${child.id}" data-child-type="${child.type}"><span class="accordionControl">${child.name}</span>`
+        let treeString = `<li class="${children ? 'isParent' : ''}" data-childrenAmmount="${children ? children.length.toString() : '0'}" data-child-id="${child.id}" data-child-type="${child.type}">
+                            <span class="accordionControl">${child.name}</span>
+                            <input type=checkbox class="selectionControl"></input>`
         if(children) {
             treeString += `<ul>`;
             for(let child of children) {
@@ -89,24 +90,10 @@
         }
     };
 
-    const toggleElementSelected = (element) => {
-        let span = element.closest('ul').parentElement.firstChild;
-        if(!span.dataset.selectedCount){
-            span.dataset.selectedCount = "0";
-        }
-        if (element.parentNode.dataset.selected  == 'true'){
-            element.parentNode.dataset.selected = ('false');
-            propagateSelectedCount(element, -1)
-        }else{
-            element.parentNode.dataset.selected = ('true');
-            propagateSelectedCount(element, 1)
-        }
-    };
-
     const propagateSelectedCount = (element, value) =>{
         let ul = element.closest('ul');
         if(ul){
-            let span = ul.parentElement.firstChild;
+            let span = ul.parentElement.querySelector(":scope > span");
             if(!span.dataset.selectedCount){
                 span.dataset.selectedCount = "0";
             }
@@ -115,11 +102,44 @@
         }
     };
 
+    const selectElement = (element) =>{
+        selectedNodes.push(element.parentNode.dataset.childId);
+    };
+
+    const deselectElement = (element) =>{
+        let id = element.parentNode.dataset.childId;
+        let index = selectedNodes.indexOf(id);
+        selectedNodes.splice(index, 1);
+    };
+
+    const toggleElementSelected = (element) => {
+        let span = element.closest('ul').parentElement.querySelector(":scope > span");
+        if(span) {
+            if (!span.dataset.selectedCount) {
+                span.dataset.selectedCount = "0";
+            }
+        }
+            if (element.parentNode.dataset.selected == 'true') {
+                element.parentNode.dataset.selected = ('false');
+                deselectElement(element);
+                propagateSelectedCount(element, -1)
+            } else {
+                element.parentNode.dataset.selected = ('true');
+                selectElement(element);
+                propagateSelectedCount(element, 1)
+            }
+    };
+
     afterUpdate(() => {
         let accordionControls = document.querySelectorAll(".accordionControl");
+        let selectionControls = document.querySelectorAll(".selectionControl");
         for(let control of accordionControls) {
             control.addEventListener("click", (evt) => {
                 toggleChildrenDisplay(evt.target);
+            })
+        }
+        for(let control of selectionControls) {
+            control.addEventListener("click", (evt) => {
                 toggleElementSelected(evt.target);
             })
         }
