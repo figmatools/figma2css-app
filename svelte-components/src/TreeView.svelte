@@ -1,7 +1,7 @@
 <script>
     export let treeData = '';
     export let requestLoading = '';
-    import { afterUpdate } from 'svelte';
+    import { afterUpdate, beforeUpdate } from 'svelte';
     let tree = '';
 
     const generateTreeview = (data) => {
@@ -28,14 +28,14 @@
         treeString += `</div>`;
 
         tree = treeString;
-    }
+    };
 
     const generateTreeviewRecursive = (child) => {
         // TODO: only add accordionControl if has children;
         // TODO: ul list style is none, add image before li according to data-child-type (map child types first);
         // TODO: accordion-control should be a downward arrow, add span before for child.name;
         // TODO: selectable childs for CSS generation;
-        let treeString = `<li data-child-id="${child.id}" data-child-type="${child.type}"><span class="accordionControl">${child.name}</span>`
+        let treeString = `<li data-child-id="${child.id}" data-child-type="${child.type}"><span class="accordionControl">${child.name}</span>`;
         let children = child.children;
         if(children) {
             treeString += `<ul>`;
@@ -44,10 +44,10 @@
             }
             treeString += `</ul>`;
         }
-        treeString += `</li>`
+        treeString += `</li>`;
 
         return treeString;
-    }
+    };
 
     const toggleChildrenDisplay = (element) => {
         let childrenNodes = element.parentNode.querySelectorAll("li");
@@ -56,12 +56,34 @@
         }
     };
 
+    const toggleElementSelected = (element) => {
+        let span = element.closest('ul').parentElement.firstChild;
+        if(!span.dataset.selectedCount){
+            span.dataset.selectedCount = "0";
+        }
+        if (element.parentNode.dataset.selected  == 'true'){
+            element.parentNode.dataset.selected = ('false');
+            span.dataset.selectedCount = parseInt(span.dataset.selectedCount)-1;
+        }else{
+            element.parentNode.dataset.selected = ('true');
+            span.dataset.selectedCount = parseInt(span.dataset.selectedCount)+1;
+        }
+    };
+
     afterUpdate(() => {
         let accordionControls = document.querySelectorAll(".accordionControl");
         for(let control of accordionControls) {
             control.addEventListener("click", (evt) => {
                 toggleChildrenDisplay(evt.target);
+                toggleElementSelected(evt.target);
             })
+        }
+    });
+
+    beforeUpdate(() =>{
+        let accordionControls = document.querySelectorAll(".accordionControl");
+        for(let control of accordionControls) {
+            control.removeEventListener("click");
         }
     });
 
@@ -116,5 +138,4 @@
             transform: rotate(360deg);
         }
     }
-
 </style>
