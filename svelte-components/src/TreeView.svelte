@@ -4,6 +4,9 @@
     import { afterUpdate } from 'svelte';
     let tree = '';
 
+    let defaultLineHeight = 25; // in px
+    let defaultCollapseTransitionTime = 500; // in milliseconds
+
     const generateTreeview = (data) => {
         tree = '';
         let treeString = `<div id="tree">`;
@@ -35,8 +38,8 @@
         // TODO: ul list style is none, add image before li according to data-child-type (map child types first);
         // TODO: accordion-control should be a downward arrow, add span before for child.name;
         // TODO: selectable childs for CSS generation;
-        let treeString = `<li data-child-id="${child.id}" data-child-type="${child.type}"><span class="accordionControl">${child.name}</span>`
         let children = child.children;
+        let treeString = `<li class="${children ? 'isParent' : ''}" data-childrenAmmount="${children ? children.length.toString() : '0'}" data-child-id="${child.id}" data-child-type="${child.type}"><span class="accordionControl">${child.name}</span>`
         if(children) {
             treeString += `<ul>`;
             for(let child of children) {
@@ -49,11 +52,59 @@
         return treeString;
     }
 
-    const toggleChildrenDisplay = (element) => {
-        let childrenNodes = element.parentNode.querySelectorAll("li");
-        for(let child of childrenNodes) {
-            child.classList.toggle("expanded");
+    const propagateLineHeightAdjustment = (element, isExpanding = true, offset = 0) => {
+        let childrenAmmount = element.dataset.childrenammount;
+        let listItemChildrenContainer = element.querySelector("ul");
+        let heightAdjustment = childrenAmmount * defaultLineHeight;
+        let containerList = element.parentNode.closest("li");
+        if(containerList && containerList.classList.contains("isParent")) {
+            propagateLineHeightAdjustment(containerList, isExpanding, heightAdjustment);
         }
+        if(isExpanding) {
+            listItemChildrenContainer.style.maxHeight = (listItemChildrenContainer.offsetHeight + heightAdjustment + offset) + "px";
+        }
+    }
+
+    const propagateCollapse = (element) => {
+        let openChildren = element.querySelectorAll("ul.open");
+        console.log(openChildren);
+        for(let child of openChildren) {
+            child.classList.remove("open");
+            child.style.maxHeight = "0px";
+        }
+    }
+
+    const toggleChildrenDisplay = (element) => {
+        let clickedListItem = element.parentNode;
+        let listItemChildrenContainer = clickedListItem.querySelector("ul");
+        let listItemChildrenAmount = clickedListItem.dataset.childrenammount;
+        if(listItemChildrenContainer.classList.toggle("open")) {
+            listItemChildrenContainer.style.maxHeight = (defaultLineHeight * listItemChildrenAmount)+ "px";
+            propagateLineHeightAdjustment(clickedListItem, true);
+        } else {
+            listItemChildrenContainer.style.maxHeight = "0px";
+            propagateLineHeightAdjustment(clickedListItem, false);
+            propagateCollapse(clickedListItem);
+        }
+        /*
+        if(clickedListItem.classList.toggle("open")) {
+            clickedListItem.style.maxHeight = (defaultLineHeight * listItemChildrenAmmount) + "px";
+            let children = clickedListItem.querySelectorAll("li");
+            for(let child of children) {
+                child.style.maxHeight = defaultLineHeight + "px";
+            }
+            propagateLineHeightAdjustment(clickedListItem, true);
+        } else {
+            clickedListItem.classList.add("closing");
+            clickedListItem.style.maxHeight = defaultLineHeight + "px";
+            let children = clickedListItem.querySelectorAll("li");
+            for(let child of children) {
+                child.style.maxHeight = "0px";
+            }
+            propagateLineHeightAdjustment(clickedListItem, false);
+            propagateCollapse(clickedListItem);
+            setTimeout(() => {clickedListItem.classList.remove("closing");},500)
+        }*/
     };
 
     afterUpdate(() => {
@@ -74,16 +125,21 @@
 </div>
 
 <style>
+    #treeview {
+        position: relative;
+    }
+
     .lds-ring:not(.active) {
         opacity: 0;
         transition: opacity 0.5s ease;
     }
     .lds-ring {
-        margin-top: 50px;
         opacity: 1;
         transition: opacity 0.5s ease;
         display: inline-block;
-        position: relative;
+        position: fixed;
+        top: 40%;
+        left: calc(50% - 40px);
         width: 80px;
         height: 80px;
     }

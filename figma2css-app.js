@@ -24,7 +24,7 @@ const runServer = () => {
     // ?figmaAccessToken=[token]&fileId=[id]&nodeIds=1:36,1:24
     let id = req.query.fileId;
     let token = req.query.figmaAccessToken;
-    let nodeIds = 
+    let nodeIds =
       req.query.nodeIds ? req.query.nodeIds.split(',') : []
     if(!id || !token) {
       res.status(500).send("Error");
@@ -51,7 +51,6 @@ const runServer = () => {
       if(child.id === id) {
         result = child;
         return result;
-        break
       } else {
         result = findElement(child, id);
       }
