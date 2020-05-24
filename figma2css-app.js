@@ -24,15 +24,17 @@ const runServer = () => {
   });
 
   app.get('/data', async function (req, res) {
-    // ?figmaAccessToken=[token]&fileId=[id]&nodeIds=1:36,1:24
+    // ?figmaToken=[token]&fileId=[id]&nodeIds=1:36,1:24&depth=1
     let id = req.query.fileId;
-    let token = req.query.figmaAccessToken;
+    let token = req.query.figmaToken;
     let nodeIds = 
-      req.query.nodeIds ? req.query.nodeIds.split(',') : []
+      req.query.nodeIds ? req.query.nodeIds.split(',') : [];
+    let depth = req.query.depth
     if(!id || !token) {
       res.status(500).send("user token and fileId needed!!!");
     }else{
-      let figmaData = await fetchProject(id, token, nodeIds);
+      console.log('nodeIds: ', nodeIds)
+      let figmaData = await fetchProject(id, token, nodeIds, depth);
       figmaData['headers'] = { token: token, id: id };
       fs.writeFileSync('./data', JSON.stringify(figmaData, null, 2), 'utf-8');
       res.send(figmaData);
@@ -66,6 +68,10 @@ const runServer = () => {
     let data = await fs.readFileSync('./data', 'utf-8')
     data = JSON.parse(data)
     let ids = req.query.ids
+    if(!data.nodes) {
+      res.send('invalid data!')
+      return
+    }
     if(!ids) {
       res.send('ids empty!')
       return
@@ -78,8 +84,12 @@ const runServer = () => {
     }
     let finalCss = ''
     for(let id of ids) {
-      let element = findElement(data.document, id)
-      finalCss += transformCss(element)
+      if(data.nodes[id]) {
+        finalCss += transformCss(data.nodes[id].document)
+      } else {
+        res.send(`could not find ${id}`)
+      }
+      //finalCss += transformCss(element)
     }
     fs.writeFileSync(resultFilePath, finalCss, 'utf-8')
     res.send(finalCss);

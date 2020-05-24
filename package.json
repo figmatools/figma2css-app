@@ -7,7 +7,7 @@
   "scripts": {
     "start": "./node_modules/.bin/supervisor -k -- figma2css-app.js --dev",
     "build": "cd svelte-components && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./__test__/endpoints.js"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +17,7 @@
     "commander": "^5.1.0",
     "express": "^4.17.1",
     "figma2css-module": "^0.0.1",
-    "figmafetch-module": "^1.0.1",
+    "figmafetch-module": "^1.0.3",
     "open": "^7.0.4",
     "reload": "^3.0.4",
     "supervisor": "^0.12.0"

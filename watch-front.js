@@ -11,7 +11,8 @@ module.exports = () => {
         console.log('Signal received: '+error.signal);
         console.log('Error when trying to build!')
       }
-      console.log('Child Process STDOUT: '+stdout);
+      console.log('STDOUT: '+stdout);
+      console.log('STDERR: '+stderr);
     })
   })
 } 
