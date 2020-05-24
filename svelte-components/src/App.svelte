@@ -2,8 +2,8 @@
 	import TreeView from './TreeView.svelte';;
 	import { onMount } from 'svelte';
 	let result = '';
-	let figmaAccessToken = '46436-c6600cfa-6adf-4031-9e2a-ba1449a6dd6c';
-	let fileId = 'SGzkSxkP3pnZQrh9pzn6mf';
+	let figmaAccessToken = '';
+	let fileId = '';
 	let treeLoading = false;
 
 	function handleSubmit(){
@@ -55,11 +55,11 @@
 			<form class="auth-form" id="generateForm" on:submit|preventDefault={handleSubmit}>
 				<div class="label-input-container">
 					<label for="figmaAccessToken">Figma Access Token</label>
-					<input id="figmaAccessToken" name="figmaAccessToken" placeholder="Access Token" bind:value={figmaAccessToken2} required>
+					<input id="figmaAccessToken" name="figmaAccessToken" placeholder="Access Token" bind:value={figmaAccessToken} required>
 				</div>
 				<div class="label-input-container">
 					<label for="fileId">File ID</label>
-					<input id="fileId" name="fileId" placeholder="ID" bind:value={fileId2} required>
+					<input id="fileId" name="fileId" placeholder="ID" bind:value={fileId} required>
 				</div>
 				<button type="submit" id="generateButton">Generate!</button>
 			</form>

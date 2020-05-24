@@ -79,8 +79,11 @@ main {
 /* TODO: rewrite TreeView.svelte to use Sveltes HTML template language to render the tree. For now, Treeviews CSS has to be
     global in order to work.*/
 
+#tree {
+    width: 50%;
+}
+
 #tree ul{
-    list-style: square inside;
     text-align: left;
     padding-left: 10px;
     overflow: hidden;

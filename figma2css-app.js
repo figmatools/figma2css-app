@@ -26,7 +26,7 @@ const runServer = () => {
   app.get('/data', async function (req, res) {
     // ?figmaToken=[token]&fileId=[id]&nodeIds=1:36,1:24&depth=1
     let id = req.query.fileId;
-    let token = req.query.figmaToken;
+    let token = req.query.figmaAccessToken;
     let nodeIds =
       req.query.nodeIds ? req.query.nodeIds.split(',') : [];
     let depth = req.query.depth

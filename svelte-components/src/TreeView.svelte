@@ -11,7 +11,6 @@
         tree = '';
         let treeString = `<div id="tree">`;
         if(!data) {
-            console.log("Error building treeview: invalid data");
             return;
         }
         if(data.type === "ERROR") {
@@ -67,7 +66,6 @@
 
     const propagateCollapse = (element) => {
         let openChildren = element.querySelectorAll("ul.open");
-        console.log(openChildren);
         for(let child of openChildren) {
             child.classList.remove("open");
             child.style.maxHeight = "0px";
@@ -75,6 +73,7 @@
     }
 
     const toggleChildrenDisplay = (element) => {
+        console.log("Should toggle!");
         let clickedListItem = element.parentNode;
         let listItemChildrenContainer = clickedListItem.querySelector("ul");
         let listItemChildrenAmount = clickedListItem.dataset.childrenammount;
@@ -86,28 +85,10 @@
             propagateLineHeightAdjustment(clickedListItem, false);
             propagateCollapse(clickedListItem);
         }
-        /*
-        if(clickedListItem.classList.toggle("open")) {
-            clickedListItem.style.maxHeight = (defaultLineHeight * listItemChildrenAmmount) + "px";
-            let children = clickedListItem.querySelectorAll("li");
-            for(let child of children) {
-                child.style.maxHeight = defaultLineHeight + "px";
-            }
-            propagateLineHeightAdjustment(clickedListItem, true);
-        } else {
-            clickedListItem.classList.add("closing");
-            clickedListItem.style.maxHeight = defaultLineHeight + "px";
-            let children = clickedListItem.querySelectorAll("li");
-            for(let child of children) {
-                child.style.maxHeight = "0px";
-            }
-            propagateLineHeightAdjustment(clickedListItem, false);
-            propagateCollapse(clickedListItem);
-            setTimeout(() => {clickedListItem.classList.remove("closing");},500)
-        }*/
     };
 
     const toggleElementSelected = (element) => {
+        console.log("Should selected!");
         let span = element.closest('ul').parentElement.firstChild;
         if(!span.dataset.selectedCount){
             span.dataset.selectedCount = "0";
