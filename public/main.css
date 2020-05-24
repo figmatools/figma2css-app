@@ -135,3 +135,26 @@ main {
 #tree ul {
     list-style-type: none;
 }
+
+#tree span{
+    position: relative;
+    display: inline-block;
+    width: 90%;
+}
+
+#tree li[data-selected='true'] > span::before {
+    content: '';
+    position:absolute;
+    background-color: rgba(105, 0, 0, 0.25);
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+#tree li > span:not([data-selected-count='0'])::after{
+    content: attr(data-selected-count);
+    margin-left: 5px;
+    color: yellow;
+}

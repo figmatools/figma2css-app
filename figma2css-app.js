@@ -7,7 +7,10 @@ const express = require('express'),
   program = require('commander'),
   path = require('path'),
   fs = require('fs'),
-  transformCss = require('figma2css-module')
+  transformCss = require('figma2css-module'),
+  reload = require('reload'),
+  watchFront = require('./watch-front')
+
 
 const fetchProject = require('figmafetch-module');
 
@@ -17,19 +20,21 @@ const runServer = () => {
     .use(express.static('public'));
 
   app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname+'/index.html'));
+    res.sendFile(path.join(__dirname+'/public/index.html'));
   });
 
   app.get('/data', async function (req, res) {
-    // ?figmaAccessToken=[token]&fileId=[id]&nodeIds=1:36,1:24
+    // ?figmaToken=[token]&fileId=[id]&nodeIds=1:36,1:24&depth=1
     let id = req.query.fileId;
-    let token = req.query.figmaAccessToken;
+    let token = req.query.figmaToken;
     let nodeIds =
-      req.query.nodeIds ? req.query.nodeIds.split(',') : []
+      req.query.nodeIds ? req.query.nodeIds.split(',') : [];
+    let depth = req.query.depth
     if(!id || !token) {
-      res.status(500).send("Error");
+      res.status(500).send("user token and fileId needed!!!");
     }else{
-      let figmaData = await fetchProject(id, token, nodeIds);
+      console.log('nodeIds: ', nodeIds)
+      let figmaData = await fetchProject(id, token, nodeIds, depth);
       figmaData['headers'] = { token: token, id: id };
       fs.writeFileSync('./data', JSON.stringify(figmaData, null, 2), 'utf-8');
       res.send(figmaData);
@@ -62,6 +67,10 @@ const runServer = () => {
     let data = await fs.readFileSync('./data', 'utf-8')
     data = JSON.parse(data)
     let ids = req.query.ids
+    if(!data.nodes) {
+      res.send('invalid data!')
+      return
+    }
     if(!ids) {
       res.send('ids empty!')
       return
@@ -74,23 +83,34 @@ const runServer = () => {
     }
     let finalCss = ''
     for(let id of ids) {
-      let element = findElement(data.document, id)
-      finalCss += transformCss(element)
+      if(data.nodes[id]) {
+        finalCss += transformCss(data.nodes[id].document)
+      } else {
+        res.send(`could not find ${id}`)
+      }
+      //finalCss += transformCss(element)
     }
     fs.writeFileSync(resultFilePath, finalCss, 'utf-8')
     res.send(finalCss);
   });
 
-  app.listen(4200, function () {
-    console.log('fake server running on 4200!');
-  });
-
+  reload(app).then(function (reloadReturned) {
+    app.listen(4200, function () {
+      console.log('Web server listening on port 4200!')
+    })
+  }).catch(function (err) {
+    console.error('Reload could not start, could not start server/sample app', err)
+  })
   //open('http://localhost:4200/')
 };
 
 program
   .description('run server!')
+  .option('-d, --dev', 'devmod watch and reload')
   .action(async function(cmd) {
+  console.log('devmod: ', cmd.dev)
+  if(cmd.dev)
+    watchFront()
   runServer()
 });
 

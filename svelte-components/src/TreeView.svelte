@@ -1,7 +1,7 @@
 <script>
     export let treeData = '';
     export let requestLoading = '';
-    import { afterUpdate } from 'svelte';
+    import { afterUpdate, beforeUpdate } from 'svelte';
     let tree = '';
 
     let defaultLineHeight = 25; // in px
@@ -31,7 +31,7 @@
         treeString += `</div>`;
 
         tree = treeString;
-    }
+    };
 
     const generateTreeviewRecursive = (child) => {
         // TODO: only add accordionControl if has children;
@@ -47,10 +47,10 @@
             }
             treeString += `</ul>`;
         }
-        treeString += `</li>`
+        treeString += `</li>`;
 
         return treeString;
-    }
+    };
 
     const propagateLineHeightAdjustment = (element, isExpanding = true, offset = 0) => {
         let childrenAmmount = element.dataset.childrenammount;
@@ -107,12 +107,34 @@
         }*/
     };
 
+    const toggleElementSelected = (element) => {
+        let span = element.closest('ul').parentElement.firstChild;
+        if(!span.dataset.selectedCount){
+            span.dataset.selectedCount = "0";
+        }
+        if (element.parentNode.dataset.selected  == 'true'){
+            element.parentNode.dataset.selected = ('false');
+            span.dataset.selectedCount = parseInt(span.dataset.selectedCount)-1;
+        }else{
+            element.parentNode.dataset.selected = ('true');
+            span.dataset.selectedCount = parseInt(span.dataset.selectedCount)+1;
+        }
+    };
+
     afterUpdate(() => {
         let accordionControls = document.querySelectorAll(".accordionControl");
         for(let control of accordionControls) {
             control.addEventListener("click", (evt) => {
                 toggleChildrenDisplay(evt.target);
+                toggleElementSelected(evt.target);
             })
+        }
+    });
+
+    beforeUpdate(() =>{
+        let accordionControls = document.querySelectorAll(".accordionControl");
+        for(let control of accordionControls) {
+            control.removeEventListener("click");
         }
     });
 
@@ -172,5 +194,4 @@
             transform: rotate(360deg);
         }
     }
-
 </style>
