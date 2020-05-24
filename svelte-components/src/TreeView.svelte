@@ -4,10 +4,11 @@
     import { afterUpdate, beforeUpdate } from 'svelte';
     let tree = '';
 
-    let defaultLineHeight = 25; // in px
+    let defaultLineHeight = 31; // in px
     let defaultCollapseTransitionTime = 500; // in milliseconds
 
     const generateTreeview = (data) => {
+        console.log("Generated");
         tree = '';
         let treeString = `<div id="tree">`;
         if(!data) {
@@ -73,22 +74,22 @@
     }
 
     const toggleChildrenDisplay = (element) => {
-        console.log("Should toggle!");
         let clickedListItem = element.parentNode;
         let listItemChildrenContainer = clickedListItem.querySelector("ul");
         let listItemChildrenAmount = clickedListItem.dataset.childrenammount;
-        if(listItemChildrenContainer.classList.toggle("open")) {
-            listItemChildrenContainer.style.maxHeight = (defaultLineHeight * listItemChildrenAmount)+ "px";
-            propagateLineHeightAdjustment(clickedListItem, true);
-        } else {
-            listItemChildrenContainer.style.maxHeight = "0px";
-            propagateLineHeightAdjustment(clickedListItem, false);
-            propagateCollapse(clickedListItem);
+        if(listItemChildrenContainer) {
+            if (listItemChildrenContainer.classList.toggle("open")) {
+                listItemChildrenContainer.style.maxHeight = (defaultLineHeight * listItemChildrenAmount) + "px";
+                propagateLineHeightAdjustment(clickedListItem, true);
+            } else {
+                listItemChildrenContainer.style.maxHeight = "0px";
+                propagateLineHeightAdjustment(clickedListItem, false);
+                propagateCollapse(clickedListItem);
+            }
         }
     };
 
     const toggleElementSelected = (element) => {
-        console.log("Should selected!");
         let span = element.closest('ul').parentElement.firstChild;
         if(!span.dataset.selectedCount){
             span.dataset.selectedCount = "0";
