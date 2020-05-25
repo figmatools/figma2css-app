@@ -97,14 +97,19 @@ main {
     position: relative;
     overflow: hidden;
     transition: all 0.5s ease;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 #tree li > ul {
     max-height: 0;
     transition: all 0.5s ease;
+    width: 100%;
 }
 
-#tree .selectionControl {
+#tree .selectionControl, #tree .childSelectionControl {
     display: inline-block;
     width: 10px;
     height: 10px;
@@ -158,6 +163,7 @@ main {
     position: relative;
     padding: 0 2px;
     overflow: hidden;
+    max-width: 80%
 }
 
 #tree li[data-selected='true'] > span {
