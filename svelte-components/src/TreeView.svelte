@@ -44,7 +44,8 @@
         let children = child.children;
         let treeString = `<li class="${children ? 'isParent' : ''}" data-childrenAmmount="${children ? children.length.toString() : '0'}" data-child-id="${child.id}" data-child-type="${child.type}">
                             <span class="accordionControl">${child.name}</span>
-                            <input type=checkbox class="selectionControl"></input>`
+                            <input type=checkbox class="selectionControl">
+                            ${children ? "<input type=checkbox class='childSelectionControl'" : ""}`
         if(children) {
             treeString += `<ul>`;
             for(let child of children) {
