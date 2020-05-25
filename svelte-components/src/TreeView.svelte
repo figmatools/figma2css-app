@@ -99,11 +99,13 @@
         let ul = element.closest('ul');
         if(ul){
             let span = ul.parentElement.querySelector(":scope > span");
-            if(!span.dataset.selectedCount){
-                span.dataset.selectedCount = "0";
+            if(span){
+                if(!span.dataset.selectedCount){
+                    span.dataset.selectedCount = "0";
+                }
+                span.dataset.selectedCount = parseInt(span.dataset.selectedCount)+value;
+                propagateSelectedCount(ul.parentElement,value)
             }
-            span.dataset.selectedCount = parseInt(span.dataset.selectedCount)+value;
-            propagateSelectedCount(ul.parentElement,value)
         }
     };
 
@@ -117,6 +119,24 @@
         selectedNodes.splice(index, 1);
     };
 
+    const toggleAllChildren = (element) => {
+        let ul = element.parentNode.querySelector(":scope > ul");
+        let liList = ul.children;
+        let children;
+        for(let i = 0; i < liList.length; i++){
+            children = liList[i].children;
+            for (let j = 0; j < children.length; j++){
+                if (children[j].className == 'selectionControl'){
+                    toggleElementSelected(children[j])
+                }
+                if (children[j].className == 'childSelectionControl'){
+                    children[j].checked = !children[j].checked;
+                    toggleAllChildren(children[j])
+                }
+            }
+        }
+    };
+
     const toggleElementSelected = (element) => {
         let span = element.closest('ul').parentElement.querySelector(":scope > span");
         if(span) {
@@ -126,10 +146,12 @@
         }
             if (element.parentNode.dataset.selected == 'true') {
                 element.parentNode.dataset.selected = ('false');
+                element.checked = false;
                 deselectElement(element);
                 propagateSelectedCount(element, -1)
             } else {
                 element.parentNode.dataset.selected = ('true');
+                element.checked = true;
                 selectElement(element);
                 propagateSelectedCount(element, 1)
             }
@@ -158,6 +180,7 @@
     afterUpdate(() => {
         let accordionControls = document.querySelectorAll(".accordionControl");
         let selectionControls = document.querySelectorAll(".selectionControl");
+        let childSelectionControl = document.querySelectorAll('.childSelectionControl');
         for(let control of accordionControls) {
             control.addEventListener("click", (evt) => {
                 toggleChildrenDisplay(evt.target);
@@ -166,6 +189,11 @@
         for(let control of selectionControls) {
             control.addEventListener("click", (evt) => {
                 toggleElementSelected(evt.target);
+            })
+        }
+        for(let control of childSelectionControl){
+            control.addEventListener("click", (evt) => {
+                toggleAllChildren(evt.target);
             })
         }
         defineLineWidth();
