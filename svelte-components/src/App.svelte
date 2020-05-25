@@ -75,7 +75,7 @@
 					<label for="depth">Depth</label>
 					<input type="number" id="depth" name="depth" placeholder="Depth" bind:value={depth}>
 				</div>
-				<button type="submit" id="generateButton">Generate!</button>
+				<button type="submit" id="generateButton" class="btn-primary">Generate!</button>
 			</form>
 			<TreeView treeData={result} requestLoading={treeLoading}/>
 			<CSSGenerator/>

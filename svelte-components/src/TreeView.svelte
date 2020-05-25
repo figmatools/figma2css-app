@@ -1,7 +1,7 @@
 <script>
     export let treeData = '';
     export let requestLoading = '';
-    import { afterUpdate, beforeUpdate } from 'svelte';
+    import { afterUpdate, beforeUpdate, onMount } from 'svelte';
     let tree = '';
     let selectedNodes = [];
 
@@ -12,7 +12,7 @@
         tree = '';
         let treeString = `<div id="tree"><div class="treeTooltip">Click on elements to see their children.
                           <br>Click on the input beside them to select for CSS generation.</div>
-                          <button type="button" id="generateCSS">Get CSS</button>`;
+                          <button type="button" id="generateCSS" class="btn-primary">Get CSS</button>`;
         if(!data) {
             return;
         }
@@ -136,23 +136,23 @@
     };
 
     const defineLineWidth = () => {
-        console.log("defining line width");
         let lines = document.querySelectorAll("span.accordionControl");
         let largestLineWidth = 0;
         let largestLine;
-        console.log(lines);
         for(let line of lines) {
             if(line.offsetWidth > largestLineWidth) {
                 largestLine = line;
                 largestLineWidth = line.offsetWidth;
             }
         }
-        console.log(largestLineWidth);
-        console.log(largestLine);
         for(let line of lines) {
             line.style.width = largestLineWidth + "px";
             line.style.display = "inline-block";
         }
+    }
+
+    const generateCSS = () => {
+        console.log("generating");
     }
 
     afterUpdate(() => {
@@ -168,6 +168,9 @@
                 toggleElementSelected(evt.target);
             })
         }
+        if(document.querySelector("#generateCSS")) {
+            document.querySelector("#generateCSS").addEventListener('click', generateCSS);
+        }
         defineLineWidth();
     });
 
@@ -175,6 +178,9 @@
         let accordionControls = document.querySelectorAll(".accordionControl");
         for(let control of accordionControls) {
             control.removeEventListener("click");
+        }
+        if(document.querySelector("#generateCSS")) {
+            document.querySelector("#generateCSS").removeEventListener('click', generateCSS);
         }
     });
 
