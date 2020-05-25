@@ -10,7 +10,9 @@
 
     const generateTreeview = (data) => {
         tree = '';
-        let treeString = `<div id="tree">`;
+        let treeString = `<div id="tree"><div class="treeTooltip">Click on elements to see their children.
+                          <br>Click on the input beside them to select for CSS generation.</div>
+                          <button type="button" id="generateCSS">Get CSS</button>`;
         if(!data) {
             return;
         }
@@ -18,19 +20,21 @@
             tree = data.msg;
             return;
         }
-
-        let root = data.document;
-        let children = root.children;
-        if(children) {
-            treeString += `<ul>`;
-            for(let child of children) {
-                treeString += generateTreeviewRecursive(child);
+        let nodes = data.nodes;
+        for(let node in nodes) {
+            let nodeRoot = nodes[node].document;
+            let children = nodeRoot.children;
+            if(children) {
+                treeString += `<ul>`;
+                for(let child of children) {
+                    treeString += generateTreeviewRecursive(child);
+                }
+                treeString += `</ul>`;
             }
-            treeString += `</ul>`;
-        }
-        treeString += `</div>`;
+            treeString += `</div>`;
 
-        tree = treeString;
+            tree = treeString;
+        }
     };
 
     const generateTreeviewRecursive = (child) => {
@@ -130,6 +134,26 @@
             }
     };
 
+    const defineLineWidth = () => {
+        console.log("defining line width");
+        let lines = document.querySelectorAll("span.accordionControl");
+        let largestLineWidth = 0;
+        let largestLine;
+        console.log(lines);
+        for(let line of lines) {
+            if(line.offsetWidth > largestLineWidth) {
+                largestLine = line;
+                largestLineWidth = line.offsetWidth;
+            }
+        }
+        console.log(largestLineWidth);
+        console.log(largestLine);
+        for(let line of lines) {
+            line.style.width = largestLineWidth + "px";
+            line.style.display = "inline-block";
+        }
+    }
+
     afterUpdate(() => {
         let accordionControls = document.querySelectorAll(".accordionControl");
         let selectionControls = document.querySelectorAll(".selectionControl");
@@ -143,6 +167,7 @@
                 toggleElementSelected(evt.target);
             })
         }
+        defineLineWidth();
     });
 
     beforeUpdate(() =>{
@@ -174,7 +199,7 @@
         transition: opacity 0.5s ease;
         display: inline-block;
         position: fixed;
-        top: 40%;
+        top: 50%;
         left: calc(50% - 40px);
         width: 80px;
         height: 80px;

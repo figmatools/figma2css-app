@@ -122,6 +122,8 @@ main {
     content: '🗎';
     font-size: 16px;
     margin-right: 10px;
+    display: inline-block;
+    width: 10px;
 }
 
 #tree li[data-child-type="CANVAS"]:before {
@@ -166,4 +168,8 @@ main {
     content: attr(data-selected-count);
     margin-left: 5px;
     color: yellow;
+}
+
+#tree .treeTooltip {
+    font-size: 10px;
 }

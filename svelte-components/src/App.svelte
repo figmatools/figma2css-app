@@ -1,12 +1,18 @@
 <script>
-	import TreeView from './TreeView.svelte';;
-	import { onMount } from 'svelte';
+	import TreeView from './TreeView.svelte';
+
+	;
+	import {onMount} from 'svelte';
+	import CSSGenerator from "./CSSGenerator.svelte";
+
 	let result = '';
 	let figmaAccessToken = '';
 	let fileId = '';
+	let nodeIds = [];
+	let depth = '';
 	let treeLoading = false;
 
-	function handleSubmit(){
+	function handleSubmit() {
 		treeLoading = true;
 		result = '';
 		let ajax = new XMLHttpRequest();
@@ -30,10 +36,10 @@
 		ajax.onreadystatechange = () => {
 			if (ajax.readyState === 4 && ajax.status === 200) {
 				let response = JSON.parse(ajax.responseText);
-				if(response.id) {
+				if (response.id) {
 					fileId = response.id;
 				}
-				if(response.token) {
+				if (response.token) {
 					figmaAccessToken = response.token;
 				}
 			}
@@ -54,16 +60,25 @@
 		<main>
 			<form class="auth-form" id="generateForm" on:submit|preventDefault={handleSubmit}>
 				<div class="label-input-container">
-					<label for="figmaAccessToken">Figma Access Token</label>
+					<label for="figmaAccessToken">Figma Access Token*</label>
 					<input id="figmaAccessToken" name="figmaAccessToken" placeholder="Access Token" bind:value={figmaAccessToken} required>
 				</div>
 				<div class="label-input-container">
-					<label for="fileId">File ID</label>
-					<input id="fileId" name="fileId" placeholder="ID" bind:value={fileId} required>
+					<label for="fileId">File ID*</label>
+					<input id="fileId" name="fileId" placeholder="File ID" bind:value={fileId} required>
+				</div>
+				<div class="label-input-container smallInput">
+					<label for="nodeIds">Node IDs</label>
+					<input id="nodeIds" name="nodeIds" placeholder="Comma Separated IDs" bind:value={nodeIds}>
+				</div>
+				<div class="label-input-container smallInput">
+					<label for="depth">Depth</label>
+					<input type="number" id="depth" name="depth" placeholder="Depth" bind:value={depth}>
 				</div>
 				<button type="submit" id="generateButton">Generate!</button>
 			</form>
 			<TreeView treeData={result} requestLoading={treeLoading}/>
+			<CSSGenerator/>
 		</main>
 		<footer>
 
@@ -202,6 +217,11 @@
 	.auth-form button:focus {
 		box-shadow: 0 0 0 0.2rem rgba(40,167,69,.5);
 	}
+
+	.smallInput {
+
+	}
+
 
 	input:-webkit-autofill,
 	input:-webkit-autofill:hover,

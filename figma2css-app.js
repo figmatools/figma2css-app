@@ -28,7 +28,7 @@ const runServer = () => {
     let id = req.query.fileId;
     let token = req.query.figmaAccessToken;
     let nodeIds =
-      req.query.nodeIds ? req.query.nodeIds.split(',') : [];
+      req.query.nodeIds ? req.query.nodeIds.split(',') : ["0:0"];
     let depth = req.query.depth
     if(!id || !token) {
       res.status(500).send("user token and fileId needed!!!");
