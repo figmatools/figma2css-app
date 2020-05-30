@@ -1,7 +1,6 @@
 <script>
+  import baseUrl from './base-url.js'
 	import TreeView from './TreeView.svelte';
-
-	;
 	import {onMount} from 'svelte';
 	import CSSGenerator from "./CSSGenerator.svelte";
 
@@ -16,7 +15,7 @@
 		treeLoading = true;
 		result = '';
 		let ajax = new XMLHttpRequest();
-		ajax.open("GET", `/data?fileId=${fileId}&figmaAccessToken=${figmaAccessToken}`, true);
+		ajax.open("GET", `${baseUrl}/data?fileId=${fileId}&figmaAccessToken=${figmaAccessToken}`, true);
 		ajax.send();
 		ajax.onreadystatechange = () => {
 			if (ajax.readyState === 4 && ajax.status === 200) {
@@ -31,7 +30,7 @@
 
 	const getSavedCredentials = () => {
 		let ajax = new XMLHttpRequest();
-		ajax.open("GET", `/cached-credentials`, true);
+		ajax.open("GET", `${baseUrl}/cached-credentials`, true);
 		ajax.send();
 		ajax.onreadystatechange = () => {
 			if (ajax.readyState === 4 && ajax.status === 200) {
@@ -54,7 +53,7 @@
 <main>
 	<div class="container">
 		<header>
-			<div class="title">Figma2CSS App!!!</div>
+			<div class="title">Figma2CSS</div>
 			<div class="subtitle">Generate CSS from Figma Layouts!</div>
 		</header>
 		<main>

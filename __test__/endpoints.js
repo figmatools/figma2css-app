@@ -69,6 +69,7 @@ const tests = {
       })
       resp.on('end', () => {
         try {
+          console.log('data: ', data)
           assert.ok(data.match(/\.button/), 'generate some css')
         }catch(err) { console.error(err) }
       })
