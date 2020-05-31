@@ -5,9 +5,11 @@
   "main": "figma2css-app.js",
   "bin": "figma2css-app.js",
   "scripts": {
-    "start": "./node_modules/.bin/supervisor -k -- figma2css-app.js",
-    "build": "cd svelte-components && npm run build",
-    "test": "node ./__test__/endpoints.js"
+    "backend": "./node_modules/.bin/supervisor -k -- figma2css-app.js",
+    "backend-test": "node ./__test__/endpoints.js",
+    "frontend": "rollup -c -w",
+    "build": "rollup -c",
+    "start": "sirv public"
   },
   "keywords": [],
   "author": "",
@@ -15,14 +17,20 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "commander": "^5.1.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "figma2css-module": "^0.0.3",
     "figmafetch-module": "^1.0.3",
     "open": "^7.0.4",
     "reload": "^3.0.4",
-    "supervisor": "^0.12.0"
-  },
-  "devDependencies": {
-    "concurrently": "^5.2.0"
+    "supervisor": "^0.12.0",
+    "@rollup/plugin-commonjs": "^12.0.0",
+    "@rollup/plugin-node-resolve": "^8.0.0",
+    "rollup": "^2.3.4",
+    "rollup-plugin-livereload": "^1.0.0",
+    "rollup-plugin-svelte": "^5.0.3",
+    "rollup-plugin-terser": "^5.1.2",
+    "sirv-cli": "^0.4.4",
+    "svelte": "^3.0.0"
   }
 }

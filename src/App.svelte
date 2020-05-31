@@ -4,18 +4,20 @@
 	import {onMount} from 'svelte';
 	import CSSGenerator from "./CSSGenerator.svelte";
 
-	let result = '';
-	let figmaAccessToken = '';
-	let fileId = '';
+	let result = ''
+	let figmaToken = ''
+	let fileId = ''
 	let nodeIds = [];
 	let depth = '';
 	let treeLoading = false;
+
+  console.log('baseUrl: ', baseUrl)
 
 	function handleSubmit() {
 		treeLoading = true;
 		result = '';
 		let ajax = new XMLHttpRequest();
-		ajax.open("GET", `${baseUrl}/data?fileId=${fileId}&figmaAccessToken=${figmaAccessToken}`, true);
+		ajax.open("GET", `${baseUrl}/data?fileId=${fileId}&figmaToken=${figmaToken}`, true);
 		ajax.send();
 		ajax.onreadystatechange = () => {
 			if (ajax.readyState === 4 && ajax.status === 200) {
@@ -39,14 +41,14 @@
 					fileId = response.id;
 				}
 				if (response.token) {
-					figmaAccessToken = response.token;
+					figmaToken = response.token;
 				}
 			}
 		}
 	};
 
 	onMount(() => {
-		getSavedCredentials();
+    getSavedCredentials();
 	})
 </script>
 
@@ -54,13 +56,13 @@
 	<div class="container">
 		<header>
 			<div class="title">Figma2CSS</div>
-			<div class="subtitle">Generate CSS from Figma Layouts!</div>
+			<div class="subtitle">Generate CSS from Figma Layouts</div>
 		</header>
 		<main>
 			<form class="auth-form" id="generateForm" on:submit|preventDefault={handleSubmit}>
 				<div class="label-input-container">
-					<label for="figmaAccessToken">Figma Access Token*</label>
-					<input id="figmaAccessToken" name="figmaAccessToken" placeholder="Access Token" bind:value={figmaAccessToken} required>
+					<label for="figmaToken">Figma Access Token*</label>
+					<input id="figmaToken" name="figmaToken" placeholder="Access Token" bind:value={figmaToken} required>
 				</div>
 				<div class="label-input-container">
 					<label for="fileId">File ID*</label>

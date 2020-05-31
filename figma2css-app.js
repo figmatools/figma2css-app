@@ -2,6 +2,7 @@
 
 const express = require('express'),
   app = express(),
+  cors = require('cors'),
   bodyParser = require('body-parser'),
   open = require('open'),
   program = require('commander'),
@@ -16,6 +17,7 @@ const fetchProject = require('figmafetch-module');
 
 const runServer = () => {
   app.use(express.json())
+    .use(cors({ credentials: true, origin: ['http://localhost:5000']}))
     .use(bodyParser.json())
     .use(express.static('public'));
 
@@ -53,7 +55,7 @@ const runServer = () => {
     const id = req.query.fileId,
       token = req.query.figmaToken,
       nodeIds =
-        req.query.nodeIds ? req.query.nodeIds.split(',') : [],
+      req.query.nodeIds ? req.query.nodeIds.split(',') : [],
       resultFilePath = req.query.filePath
     const data = await fetchProject(id, token, nodeIds);
     if(!data) {
@@ -90,9 +92,9 @@ program
   .description('run server!')
   .option('-d, --dev', 'devmod watch and reload')
   .action(async function(cmd) {
-  if(cmd.dev)
-    watchFront()
-  runServer()
-});
+    if(cmd.dev)
+      watchFront()
+    runServer()
+  });
 
 program.parse(process.argv);

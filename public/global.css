@@ -1,0 +1,214 @@
+:root {
+  --main-color: #e43f5a;
+  --secondary-color: rgba(175, 88, 95, 0.75);
+  --light-grey: #e0e0e0;
+  --font-black: #666666;
+}
+
+/*
+MINIMAL CSS RESET:
+ */
+
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+  background-color: #1b1b2f;
+}
+
+*, *:before, *:after {
+  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+  'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  box-sizing: inherit;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+input {
+  background-color: transparent;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* END CSS RESET */
+
+.container {
+  margin: 0 auto;
+  min-height: 100vh;
+  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+  'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  display: block;
+  font-weight: 300;
+  font-size: 100px;
+  color: var(--main-color);
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  font-weight: 300;
+  font-size: 42px;
+  color: var(--secondary-color);
+  word-spacing: 5px;
+  padding-bottom: 15px;
+}
+
+main {
+  width: 100%;
+  color: rgba(255, 255, 255, 0.61);
+}
+
+.btn-primary {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  background-color: #28a745;
+  color: white;
+  border-radius: 5px;
+  transition: all 0.6s ease;
+  margin: 5px auto;
+}
+
+/* TODO: rewrite TreeView.svelte to use Sveltes HTML template language to render the tree. For now, Treeviews CSS has to be
+global in order to work.*/
+
+#tree {
+  width: 50%;
+}
+
+#tree ul{
+  text-align: left;
+  padding-left: 20px;
+  overflow: hidden;
+  list-style-type: none;
+}
+
+#tree .accordionControl {
+  cursor: pointer;
+}
+
+#tree li {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#tree li > ul {
+  max-height: 0;
+  transition: all 0.5s ease;
+  width: 100%;
+}
+
+#tree .selectionControl, #tree .childSelectionControl {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  vertical-align: middle;
+  border: 1px solid var(--main-color);
+  border-radius: 5px;
+}
+
+#tree li[data-selected="true"] > .selectionControl {
+  background-color: var(--secondary-color);
+}
+
+/* Default Icon */
+#tree li:before {
+  content: '🗎';
+  font-size: 16px;
+  margin-right: 10px;
+  display: inline-block;
+  width: 10px;
+}
+
+#tree li[data-child-type="CANVAS"]:before {
+  content: '🖉';
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+#tree li[data-child-type="RECTANGLE"]:before {
+  content: '▭';
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+#tree li[data-child-type="GROUP"]:before {
+  content: '⌸';
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+#tree li[data-child-type="FRAME"]:before {
+  content: '🖽';
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+#tree span{
+  position: relative;
+  padding: 0 2px;
+  overflow: hidden;
+  max-width: 80%
+}
+
+#tree li[data-selected='true'] > span {
+  font-weight: bold;
+}
+
+#tree li > span:not([data-selected-count='0'])::after{
+  content: attr(data-selected-count);
+  margin-left: 5px;
+  color: yellow;
+}
+
+#tree .treeTooltip {
+  font-size: 10px;
+}
+
+button#generateCSS {
+  font-size: 14px;
+  line-height: 14px;
+  padding: 8px 16px;
+}
+
+input#generateCSS:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+input#generateCSS:focus {
+  box-shadow: 0 0 0 0.2rem rgba(40,167,69,.5);
+}
