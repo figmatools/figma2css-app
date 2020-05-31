@@ -19,7 +19,7 @@ const tests = {
         }catch(err) { console.error(err) }
       })
     }).on("error", (err) => {
-      console.log("Error: " + err.message)
+      console.error("Error: " + err.message)
     })
   },
   getNodes: async () => {
@@ -38,7 +38,7 @@ const tests = {
           resolve()
         })
       }).on("error", (err) => {
-        console.log("Error: " + err.message)
+        console.error("Error: " + err.message)
         reject()
       })  
     });
@@ -56,12 +56,12 @@ const tests = {
         }catch(err) { console.error(err) }
       })
     }).on("error", (err) => {
-      console.log("Error: " + err.message)
+      console.error("Error: " + err.message)
     })
   },
   generateCss: async () => {
     await tests.getNodes()
-    const testUrl = `http://localhost:4200/css?ids=1:14,1:15&filePath=test.css`
+    const testUrl = `http://localhost:4200/css?figmaToken=${figmaToken}&fileId=${fileId}&nodeIds=1:14,1:15&filePath=test.css`
     http.get(testUrl, (resp) => {
       let data = ''
       resp.on('data', (chunk) => {
@@ -69,12 +69,11 @@ const tests = {
       })
       resp.on('end', () => {
         try {
-          console.log('data: ', data)
           assert.ok(data.match(/\.button/), 'generate some css')
         }catch(err) { console.error(err) }
       })
     }).on("error", (err) => {
-      console.log("Error: " + err.message)
+      console.error("Error: " + err.message)
     })
   } 
 }

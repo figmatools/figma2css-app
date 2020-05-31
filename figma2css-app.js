@@ -26,14 +26,13 @@ const runServer = () => {
   app.get('/data', async function (req, res) {
     // ?figmaToken=[token]&fileId=[id]&nodeIds=1:36,1:24&depth=1
     let id = req.query.fileId;
-    let token = req.query.figmaAccessToken;
+    let token = req.query.figmaToken;
     let nodeIds =
-      req.query.nodeIds ? req.query.nodeIds.split(',') : ["0:0"];
+      req.query.nodeIds ? req.query.nodeIds.split(',') : [];
     let depth = req.query.depth
     if(!id || !token) {
       res.status(500).send("user token and fileId needed!!!");
     }else{
-      console.log('nodeIds: ', nodeIds)
       let figmaData = await fetchProject(id, token, nodeIds, depth);
       figmaData['headers'] = { token: token, id: id };
       fs.writeFileSync('./data', JSON.stringify(figmaData, null, 2), 'utf-8');
@@ -49,47 +48,30 @@ const runServer = () => {
     } catch (e) {}
   });
 
-  const findElement = (item, id) => {
-    let result = null;
-    if(!item.children) return null;
-    for(let child of item.children) {
-      if(child.id === id) {
-        result = child;
-        return result;
-      } else {
-        result = findElement(child, id);
-      }
-    }
-    return result
-  };
-
   app.get('/css', async function (req, res) {
-    let data = await fs.readFileSync('./data', 'utf-8')
-    data = JSON.parse(data)
-    let ids = req.query.ids
+    // ?figmaToken=[token]&fileId=[id]&nodeIds=1:36,1:24&depth=1
+    const id = req.query.fileId,
+      token = req.query.figmaToken,
+      nodeIds =
+        req.query.nodeIds ? req.query.nodeIds.split(',') : [],
+      resultFilePath = req.query.filePath
+    const data = await fetchProject(id, token, nodeIds);
+    if(!data) {
+      res.send('no data was found!')
+      return
+    }
     if(!data.nodes) {
       res.send('invalid data!')
       return
     }
-    if(!ids) {
-      res.send('ids empty!')
-      return
-    }
-    ids = ids.split(',')
-    let resultFilePath = req.query.filePath
     if(!resultFilePath) {
       res.send('resultPath empty!')
       return
     }
     let finalCss = ''
-    for(let id of ids) {
-      if(data.nodes[id]) {
-        finalCss += transformCss(data.nodes[id].document)
-      } else {
-        res.send(`could not find ${id}`)
-      }
-      //finalCss += transformCss(element)
-    }
+    Object.keys(data.nodes).forEach((key) => {
+      finalCss += transformCss(data.nodes[key].document)
+    })
     fs.writeFileSync(resultFilePath, finalCss, 'utf-8')
     res.send(finalCss);
   });
@@ -108,7 +90,6 @@ program
   .description('run server!')
   .option('-d, --dev', 'devmod watch and reload')
   .action(async function(cmd) {
-  console.log('devmod: ', cmd.dev)
   if(cmd.dev)
     watchFront()
   runServer()

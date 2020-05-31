@@ -1,1 +1,15 @@
-undefinedundefined
+.button {
+	background-color: rgb(0,0,0) !important;
+	border: 2px SOLID rgb(0,0,0) !important;
+	border-radius: 6px !important;
+}
+
+.button {
+	font-family: Roboto !important;
+	font-weight: Black !important;
+	text-transform: uppercase !important;
+	font-size: 13px !important;
+	letter-spacing: 0.52px !important;
+	color: rgb(255,255,255) !important;
+}
+
