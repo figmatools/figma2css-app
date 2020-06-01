@@ -1,32 +1,28 @@
 <script>
-  export let treeData = '';
-  let treeString = ''
+	import Node from './Node.svelte'
+
+  export let treeData = ''
+  let roots = []
   const loadData = (data) => {
     if(!data) return
-    treeString = `<ul>`
-    const pages = data.document.children
-    const generateTreeview = (node) => {
-      treeString += `<li>${node.name}`
-      if(node.children) {
-        treeString += `<ul>`
-        for(let child of node.children) 
-          generateTreeview(child)
-        treeString += `</ul>`
-      }
-      treeString += `</li>`
-      return
+    let transformTreeView = (child) => {
+      child.isOpen = true
+      child.isChecked = false
+      if(child.children) 
+        child.children = child.children.map(child => transformTreeView(child))
+      return child
     }
-    for(let page of pages) 
-      generateTreeview(page)
-    treeString += `</ul>`
-  } 
+    roots = data.document.children.map(child => transformTreeView(child))
+  }
 
   $: loadData(treeData);
 </script>
 
-<div id="treeview">
-  {@html treeString}
-</div>
+<ul class="list pa0 pl3">
+  {#each roots as root}
+    <Node data={root} isParentChecked={root.isChecked}/>
+  {/each}
+</ul>
 
 <style>
 </style>

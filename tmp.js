@@ -1,24 +1,55 @@
-const fs = require('fs')
-
-let data = fs.readFileSync('./file-data', 'utf-8')
-data = JSON.parse(data)
-let treeString = `<ul>`
-let pages = data.document.children
-let generateTreeview = (node) => {
-  treeString += `<li>${node.name}`
-  if(node.children) {
-    treeString += `<ul>`
-    for(let child of node.children) {
-      console.log('child: ', child)
-      generateTreeviewRecursive(child)
-    }
-    treeString += `</ul>`
+let tree = [
+  {
+    id: 1,
+    isChecked: false,
+    children: [
+      {
+        id: 2,
+        isChecked: true,
+        children: [
+          {
+            id: 5,
+            isChecked: true,
+          },
+          {
+            id: 6,
+            isChecked: true,
+          }
+        ]
+      },
+      {
+        id: 3,
+        isChecked: false,
+        children: [
+          {
+            id: 4,
+            isChecked: true
+          }
+        ]
+      }
+    ]
   }
-  treeString += `</li>`
-  return
+]
+
+const getCheckedIds = (data) => {
+  let checkedIds = []
+  console.log('isChecked: ', data.isChecked)
+  if(data.isChecked) 
+    checkedIds.push(data.id)
+  if(data.children) {
+    data.children.forEach(child => {
+      checkedIds = checkedIds.concat(getCheckedIds(child))
+    })
+  }
+  return checkedIds
 }
-for(let page of pages) {
-  generateTreeviewRecursive(page)
-}
-treeString += `</ul>`
-console.log('>>>>>>>> ', treeString)
+
+const getIds = (data) => {
+  let result = []
+  data.forEach(child => {
+    result = getCheckedIds(child)
+  })
+  return result
+} 
+
+console.log(getIds(tree))
