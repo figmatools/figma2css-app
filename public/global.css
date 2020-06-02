@@ -3335,3 +3335,10 @@ code, .code { font-family: Consolas, monaco, monospace; }
 .border-box {
   box-sizing: border-box;
 }
+
+
+// extras
+
+.min-w6 {
+  min-width: 18rem;
+}

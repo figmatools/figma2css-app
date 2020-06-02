@@ -96,25 +96,21 @@
     <Input label={'Figma Acess Token*'} value={figmaToken} /> 
     <Input label={'File Id*'} value={fileId} /> 
   </div>
-  <div class="flex items-end bb b--light-gray ph4 pv2">
+  <div class="flex items-center justify-between bb b--light-gray ph4 pv2">
     <input css={'border-box h2 input-reset ba br2 b--moon-gray pa0 pl2'} 
       type="file" bind:files>
+    <p class="pa0 ma0 f7">Choose the destination file(*.css), select the nodes in the treeview and click generate</p>
+    <button on:click={generateCss} 
+      class="bn bg-green white br2 h2 f7 w5 pointer">
+      generate
+    </button>
   </div>
   <div class="flex relative h-100 w-100">
-    <div class="h-100 bg-light-gray overflow-auto">
-      <div class="w5 flex pa2 items-center justify-between bg-washed-yellow">
-        <p class="pa0 ma0 f7">Select a node and click generate!</p>
-        <button on:click={generateCss} 
-          class="bn bg-green white br2 h2 f7 w3 pointer">
-          generate
-        </button>
-      </div>
-      <div>
-        <TreeView treeData={data} />
-      </div>
+    <div class="min-w6 bg-light-gray overflow-auto">
+      <TreeView treeData={data} />
     </div>
-    <div class="w-100 h-100 pa3">
-      <textarea class="w5 h5" bind:value={resultCss}></textarea>
+    <div class="w-100 h-100 pa3 flex justify-center">
+      <textarea class="w-100 h-100" bind:value={resultCss}></textarea>
     </div>
   </div>
   <CSSGenerator/>
