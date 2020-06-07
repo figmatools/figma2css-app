@@ -17,7 +17,7 @@ module.exports = (documentJSON, includedAttributes) => {
 const indentStr = "    ";
 
 const extractClassSelector = (nameJSON) => {
-    return JSON.stringify(nameJSON).replace(/\"/g, "");
+    return JSON.stringify(nameJSON).replace(/\"/g, "").replace(" ", "-");
 }
 
 const extractClassBody = (bodyJSON, includedAttributes) => {
@@ -27,8 +27,11 @@ const extractClassBody = (bodyJSON, includedAttributes) => {
     let stringBuffer = "";
 
     for(let attr in bodyJSON) {
+        // Attribute names in Figma are lowerCamelCased, whereas CSS uses dashes.
+        let attrTreatedName = attr;
+        attrTreatedName = convertLowerCamelCaseToDashes(attrTreatedName);
         if(includedAttributes.includes(attr)) {
-            stringBuffer += indentStr + attr + ": " + bodyJSON[attr] + ";\n";
+            stringBuffer += indentStr + attrTreatedName + ": " + bodyJSON[attr] + ";\n";
         }
     }
 
@@ -36,4 +39,19 @@ const extractClassBody = (bodyJSON, includedAttributes) => {
     stringBuffer = stringBuffer.substr(0, stringBuffer.length-2);
 
     return stringBuffer;
+}
+
+const convertLowerCamelCaseToDashes = (string) => {
+    let stringCamelCaseIndex = string.match(/[A-Z]/) ? string.match(/[A-Z]/).index : -1;
+    while (stringCamelCaseIndex > 0) {
+        string = string.substr(0, stringCamelCaseIndex) +
+                "-" +
+                string.substr(stringCamelCaseIndex, 1).toLowerCase() +
+                string.substr(stringCamelCaseIndex + 1);
+        stringCamelCaseIndex = string.match(/[A-Z]/) ? string.match(/[A-Z]/).index : -1;
+    }
+
+    string = string.toLowerCase();
+
+    return string;
 }

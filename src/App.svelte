@@ -90,7 +90,7 @@
     <div class="fixed w-100 h-100 z-999 flex justify-center items-center">
       <img class="w2 h2"
         src='https://i.ya-webdesign.com/images/loading-png-gif.gif'
-        alt="loaging"/>
+        alt="loading"/>
     </div>
   {/if}
 
@@ -104,7 +104,7 @@
     <p class="pa0 ma0 f7">Choose the destination file(*.css), select the nodes in the treeview and click generate</p>
     <button on:click={generateCss}
       class="bn bg-green white br2 h2 f7 w5 pointer">
-      generate
+      Generate
     </button>
   </div>
   <div class="flex relative h-100 w-100">
