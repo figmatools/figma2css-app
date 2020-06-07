@@ -6,7 +6,7 @@
 	import { onMount } from 'svelte';
 	import CSSGenerator from "./CSSGenerator.svelte";
 
-  let files;
+  let fileName = '';
 
   let loading = false,
       data = '',
@@ -40,6 +40,12 @@
     return checkedIds
   }
 
+  const testeFileName = (name) => {
+    console.log(name.length);
+    let regex = new RegExp(/^(con|prn|aux|nul|com[0-9]|lpt[0-9])$|([<>:"\\/\\\\|?*])|(\\.|\\s)$/ig);
+    return !regex.test(name);
+  };
+
   const getIds = (data) => {
     let result = []
     data.forEach(child => {
@@ -50,6 +56,7 @@
 
   const generateCss = async () => {
     if(!data) return;
+    if(!testeFileName(fileName)) return;
     loading = true
     let checkedIds = getIds(data.document.children)
     console.log(checkedIds);
@@ -58,7 +65,7 @@
     try {
       resultCss = (
         await (
-          await fetch(`${baseUrl}/css?figmaToken=${figmaToken}&fileId=${fileId}&nodeIds=${checkedIds.join(',')}&filePath=./test.css&cssAttributes=fontFamily,fontSize,fontWeight`)
+          await fetch(`${baseUrl}/css?figmaToken=${figmaToken}&fileId=${fileId}&nodeIds=${checkedIds.join(',')}&filePath=./output/${fileName}.css&cssAttributes=fontFamily,fontSize,fontWeight`)
         ).text()
       )
     }catch(err) { console.error(err) }
@@ -99,9 +106,8 @@
     <Input label={'File Id*'} value={fileId} />
   </div>
   <div class="flex items-center justify-between bb b--light-gray ph4 pv2">
-    <input css={'border-box h2 input-reset ba br2 b--moon-gray pa0 pl2'}
-      type="file" bind:files>
-    <p class="pa0 ma0 f7">Choose the destination file(*.css), select the nodes in the treeview and click generate</p>
+    <Input label={'Output Name'} bind:value={fileName} />
+    <p class="pa0 ma0 f7">Name the destination file, select the nodes in the treeview and click generate</p>
     <button on:click={generateCss}
       class="bn bg-green white br2 h2 f7 w5 pointer">
       generate
