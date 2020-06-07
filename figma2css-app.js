@@ -10,7 +10,8 @@ const express = require('express'),
   fs = require('fs'),
   transformCss = require('figma2css-module'),
   reload = require('reload'),
-  watchFront = require('./watch-front')
+  watchFront = require('./watch-front'),
+  transformCssAlternative = require('./transformCssAlternative')
 
 
 const fetchProject = require('figmafetch-module');
@@ -54,9 +55,15 @@ const runServer = () => {
     // ?figmaToken=[token]&fileId=[id]&nodeIds=1:36,1:24&depth=1
     const id = req.query.fileId,
       token = req.query.figmaToken,
-      nodeIds =
-      req.query.nodeIds ? req.query.nodeIds.split(',') : [],
+      cssAttributes = req.query.cssAttributes ? req.query.cssAttributes.split(",") : [],
+      nodeIds = req.query.nodeIds ? req.query.nodeIds.split(',') : [],
       resultFilePath = req.query.filePath
+
+    if(cssAttributes.length === 0) {
+      res.send('no css attribute selected to be generated!');
+      return;
+    }
+
     const data = await fetchProject(id, token, nodeIds);
     if(!data) {
       res.send('no data was found!')
@@ -72,7 +79,7 @@ const runServer = () => {
     }
     let finalCss = ''
     Object.keys(data.nodes).forEach((key) => {
-      finalCss += transformCss(data.nodes[key].document)
+      finalCss += transformCssAlternative(data.nodes[key].document, cssAttributes);
     })
     fs.writeFileSync(resultFilePath, finalCss, 'utf-8')
     res.send(finalCss);
