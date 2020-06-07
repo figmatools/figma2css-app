@@ -48,7 +48,9 @@ const runServer = () => {
       let data = JSON.parse(fs.readFileSync('./data'));
       data = data['headers'];
       res.send(data);
+      return
     } catch (e) {}
+    res.status(500).send("");
   });
 
   app.get('/css', async function (req, res) {

@@ -15,8 +15,8 @@
       resultCss
 
 
-  const loadTreeView = async (fileId, figmaToken) => {
-    if(!fileId && !figmaToken) return
+  const loadTreeView = async () => {
+    if(!fileId || !figmaToken) return
     loading = true
     try {
       data = (
@@ -59,7 +59,6 @@
     if(!testeFileName(fileName)) return;
     loading = true
     let checkedIds = getIds(data.document.children)
-    console.log(checkedIds);
     if(!checkedIds.length) return
     // TODO: parametrize filePath and cssAttributes. Both should be adv configs on the interface.
     try {
@@ -86,8 +85,6 @@
 	onMount(async () => {
     await getSavedCredentials();
 	})
-
-  $: loadTreeView(fileId, figmaToken)
 </script>
 
 <main>
@@ -97,20 +94,21 @@
     <div class="fixed w-100 h-100 z-999 flex justify-center items-center">
       <img class="w2 h2"
         src='https://i.ya-webdesign.com/images/loading-png-gif.gif'
-        alt="loaging"/>
+        alt="loading"/>
     </div>
   {/if}
 
   <div class="flex items-end bb b--light-gray ph4 pv3">
-    <Input label={'Figma Acess Token*'} value={figmaToken} />
-    <Input label={'File Id*'} value={fileId} />
+    <Input label={'Figma Acess Token*'} bind:value={figmaToken} id={'figmaToken'} />
+    <Input label={'File Id*'} bind:value={fileId} id={'fileId'} />
+    <button on:click={loadTreeView} class="bn bg-green white br2 h2 f7 w5 pointer">Generate Tree</button>
   </div>
   <div class="flex items-center justify-between bb b--light-gray ph4 pv2">
     <Input label={'Output Name'} bind:value={fileName} />
     <p class="pa0 ma0 f7">Name the destination file, select the nodes in the treeview and click generate</p>
     <button on:click={generateCss}
       class="bn bg-green white br2 h2 f7 w5 pointer">
-      generate
+      Generate CSS
     </button>
   </div>
   <div class="flex relative h-100 w-100">

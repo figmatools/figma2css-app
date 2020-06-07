@@ -7,6 +7,6 @@
 
 <div class="flex flex-column mr3 f7 w4">
   <label class="mb2">{label}</label>
-  <input class={`border-box h2 input-reset ba br2 b--moon-gray pa0 pl2 ${css}`} 
+  <input class={`border-box h2 input-reset ba br2 b--moon-gray pa0 pl2 ${css}`}
     placeholder={placeholder} bind:value={value} required>
 </div>
