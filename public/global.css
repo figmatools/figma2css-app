@@ -3349,3 +3349,7 @@ code, .code { font-family: Consolas, monaco, monospace; }
 .min-w6 {
   min-width: 18rem;
 }
+
+.w6 {
+  width: 250px;
+}

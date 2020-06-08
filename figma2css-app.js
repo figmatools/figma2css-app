@@ -57,34 +57,34 @@ const runServer = () => {
     // ?figmaToken=[token]&fileId=[id]&nodeIds=1:36,1:24&depth=1
     const id = req.query.fileId,
       token = req.query.figmaToken,
-      cssAttributes = req.query.cssAttributes ? req.query.cssAttributes.split(",") : [],
       nodeIds = req.query.nodeIds ? req.query.nodeIds.split(',') : [],
       resultFilePath = req.query.filePath
 
-    if(cssAttributes.length === 0) {
-      res.send('no css attribute selected to be generated!');
-      return;
-    }
-
-    const data = await fetchProject(id, token, nodeIds);
+    const data = await fetchProject(id, token, nodeIds)
     if(!data) {
-      res.send('no data was found!')
+      res.status(400).send('no data was found!')
       return
     }
     if(!data.nodes) {
-      res.send('invalid data!')
-      return
-    }
-    if(!resultFilePath) {
-      res.send('resultPath empty!')
+      res.status(400).send('invalid data!')
       return
     }
     let finalCss = ''
     Object.keys(data.nodes).forEach((key) => {
-      finalCss += transformCssAlternative(data.nodes[key].document, cssAttributes);
+      finalCss += transformCss(data.nodes[key].document)
     })
-    fs.writeFileSync(resultFilePath, finalCss, 'utf-8')
-    res.send(finalCss);
+    if(resultFilePath) {
+      try {
+        fs.writeFileSync(resultFilePath, finalCss, 'utf-8')
+      } catch(err) { 
+        res.status(400).send(err)
+        console.error(err)
+        return 
+      }
+    }
+    console.log('finalCss: ', finalCss)
+    finalCss = finalCss ? finalCss : 'No css styles found in the object' 
+    res.send(finalCss)
   });
 
   reload(app).then(function (reloadReturned) {

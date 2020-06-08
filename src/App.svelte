@@ -6,7 +6,7 @@
 	import { onMount } from 'svelte';
 	import CSSGenerator from "./CSSGenerator.svelte";
 
-  let fileName = '';
+  let filePath = ''
 
   let loading = false,
       data = '',
@@ -40,8 +40,7 @@
     return checkedIds
   }
 
-  const testeFileName = (name) => {
-    console.log(name.length);
+  const testFileName = (name) => {
     let regex = new RegExp(/^(con|prn|aux|nul|com[0-9]|lpt[0-9])$|([<>:"\\/\\\\|?*])|(\\.|\\s)$/ig);
     return !regex.test(name);
   };
@@ -56,7 +55,6 @@
 
   const generateCss = async () => {
     if(!data) return;
-    if(!testeFileName(fileName)) return;
     loading = true
     let checkedIds = getIds(data.document.children)
     if(!checkedIds.length) return
@@ -64,7 +62,7 @@
     try {
       resultCss = (
         await (
-          await fetch(`${baseUrl}/css?figmaToken=${figmaToken}&fileId=${fileId}&nodeIds=${checkedIds.join(',')}&filePath=./output/${fileName}.css&cssAttributes=fontFamily,fontSize,fontWeight`)
+          await fetch(`${baseUrl}/css?figmaToken=${figmaToken}&fileId=${fileId}&nodeIds=${checkedIds.join(',')}&filePath=${filePath}`)
         ).text()
       )
     }catch(err) { console.error(err) }
@@ -91,20 +89,24 @@
   <header>
   </header>
   {#if loading}
-    <div class="fixed w-100 h-100 z-999 flex justify-center items-center">
+    <div class="bg-white-50 fixed w-100 h-100 z-999 flex justify-center items-center">
       <img class="w2 h2"
         src='https://i.ya-webdesign.com/images/loading-png-gif.gif'
         alt="loading"/>
     </div>
   {/if}
 
-  <div class="flex items-end bb b--light-gray ph4 pv3">
-    <Input label={'Figma Acess Token*'} bind:value={figmaToken} id={'figmaToken'} />
-    <Input label={'File Id*'} bind:value={fileId} id={'fileId'} />
-    <button on:click={loadTreeView} class="bn bg-green white br2 h2 f7 w5 pointer">Generate Tree</button>
+  <div class="flex justify-between items-end bb b--light-gray ph4 pv3">
+    <div class="flex">
+      <Input label={'Figma Acess Token*'} bind:value={figmaToken} id={'figmaToken'} />
+      <Input label={'File Id*'} bind:value={fileId} id={'fileId'} />
+    </div>
+    <button on:click={loadTreeView} class="bn bg-green white br2 h2 f7 w5 pointer">
+      Load Data
+    </button>
   </div>
   <div class="flex items-center justify-between bb b--light-gray ph4 pv2">
-    <Input label={'Output Name'} bind:value={fileName} />
+    <Input label={'Full Output Path'} bind:value={filePath} />
     <p class="pa0 ma0 f7">Name the destination file, select the nodes in the treeview and click generate</p>
     <button on:click={generateCss}
       class="bn bg-green white br2 h2 f7 w5 pointer">

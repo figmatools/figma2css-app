@@ -5,7 +5,7 @@
   export let placeholder
 </script>
 
-<div class="flex flex-column mr3 f7 w4">
+<div class="flex flex-column mr3 f7 w6">
   <label class="mb2">{label}</label>
   <input class={`border-box h2 input-reset ba br2 b--moon-gray pa0 pl2 ${css}`}
     placeholder={placeholder} bind:value={value} required>
