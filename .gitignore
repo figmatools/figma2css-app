@@ -8,3 +8,4 @@ public/build
 test.css
 data
 svelte-components/node_modules
+tmp.js
