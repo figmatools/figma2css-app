@@ -66,7 +66,7 @@ const runServer = () => {
       return
     }
     if(!data.nodes) {
-      res.status(400).send('invalid data!')
+      res.status(400).send('No node ids!')
       return
     }
     let finalCss = ''
@@ -82,7 +82,6 @@ const runServer = () => {
         return 
       }
     }
-    console.log('finalCss: ', finalCss)
     finalCss = finalCss ? finalCss : 'No css styles found in the object' 
     res.send(finalCss)
   });

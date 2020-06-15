@@ -8,6 +8,8 @@
 
   let filePath = ''
 
+  let isWatching = false
+
   let loading = false,
       data = '',
       figmaToken = '',
@@ -53,10 +55,21 @@
     return result
   }
 
+  let watchInterval = false;
   const watch = async () => {
-    console.log('watch!')
+    if(isWatching) {
+      clearInterval(watchInterval)
+      isWatching = false
+      return;
+    }
 		let lastModified = new Date("1900-05-24T02:34:14.475592Z")
-    setInterval(async () => {
+    let i = 0;
+    isWatching = true
+    watchInterval = setInterval(async () => {
+      if(i < 1) {
+        i++
+        return;
+      }
       try {
         let result = (
           await (
@@ -69,7 +82,7 @@
           lastModified = currentLastModified
         }
       } catch(err) { console.error(err) }
-    }, 500)
+    }, 5000)
   } 
 
   const generateCss = async () => {
@@ -132,8 +145,8 @@
       Generate CSS
     </button>
     <button on:click={watch}
-      class="bn bg-green white br2 h2 f7 w5 pointer">
-      Watch
+      class={`${isWatching ? 'bg-red' : 'bg-green'} bn white br2 h2 f7 w5 pointer`}>
+      {isWatching ? 'Stop Watching!' : 'Watch'}
     </button>
   </div>
   <div class="flex relative h-100 w-100">
