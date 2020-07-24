@@ -1,21 +1,46 @@
 #figma2css-app
 
-##Install
+# Use cases
+
+This is very usefull for components or pages that babely change between projects, so you don't have to change the styles everytime
+you just need to map them and generate the css
+
+We found that a mixture of generating automacally and also including your own css is the best approach in most cases
+
+##How to use it
 
 ```
 npm i -g figma2css-app
 figma2css-app
 ```
 
-# Idea for the frontend
+open your browser in port 5000
 
-https://www.figma.com/file/ZUgC0M5mOc6Q8SOyZAX3Yf/Figma-Tools?node-id=0%3A1
+# Figma Access token:
+how to get an access token:
+https://www.figma.com/developers/api#access-tokens
 
+# File id*
+you can get it in the file url e.g:
+https://www.figma.com/file/acuAbVNviSzackLyfNNBaM/<......>
 
-## Endpoints
-## /
-where the frontend will live
+acuAbVNviSzackLyfNNBaM is the fileId of this url
 
-## /data
-return all the data from the file
+# Full Output Path
+you can put the output path of the generated css file e.g:
+```
+/home/mmc/my-project/css/figma-generated-css.css
+```
+if you're running watch mode everytime that the figma file change this file will be changed too :smile:
+
+Click load Data to load the treeview with all the figma elements
+
+Choose the elements that you want to extract the css from, you should also change the name of the element in the design to 
+the name of your css class, we plan to change this in the future so you've more freedom to choose the name of the class, but 
+for now this is the best approach
+
+Then click **generate css** to generate the css once
+or **Watch** to watch the figma file and generate the css everytime the figma file changes
+
+and that's it enjoy
 
