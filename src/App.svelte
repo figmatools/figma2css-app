@@ -8,6 +8,8 @@
 
   let filePath = ''
 
+  let isWatching = false
+
   let loading = false,
       data = '',
       figmaToken = '',
@@ -53,6 +55,36 @@
     return result
   }
 
+  let watchInterval = false;
+  const watch = async () => {
+    if(isWatching) {
+      clearInterval(watchInterval)
+      isWatching = false
+      return;
+    }
+		let lastModified = new Date("1900-05-24T02:34:14.475592Z")
+    let i = 0;
+    isWatching = true
+    watchInterval = setInterval(async () => {
+      if(i < 1) {
+        i++
+        return;
+      }
+      try {
+        let result = (
+          await (
+            await fetch(`${baseUrl}/data?figmaToken=${figmaToken}&fileId=${fileId}&depth=1`)
+          ).json()
+        )
+				let currentLastModified = new Date(result.lastModified)
+        if(currentLastModified > lastModified) {
+          await generateCss()
+          lastModified = currentLastModified
+        }
+      } catch(err) { console.error(err) }
+    }, 5000)
+  } 
+
   const generateCss = async () => {
     if(!data) return;
     loading = true
@@ -65,7 +97,7 @@
           await fetch(`${baseUrl}/css?figmaToken=${figmaToken}&fileId=${fileId}&nodeIds=${checkedIds.join(',')}&filePath=${filePath}`)
         ).text()
       )
-    }catch(err) { console.error(err) }
+    } catch(err) { console.error(err) }
     loading = false
   }
 
@@ -111,6 +143,10 @@
     <button on:click={generateCss}
       class="bn bg-green white br2 h2 f7 w5 pointer">
       Generate CSS
+    </button>
+    <button on:click={watch}
+      class={`${isWatching ? 'bg-red' : 'bg-green'} bn white br2 h2 f7 w5 pointer`}>
+      {isWatching ? 'Stop Watching!' : 'Watch'}
     </button>
   </div>
   <div class="flex relative h-100 w-100">

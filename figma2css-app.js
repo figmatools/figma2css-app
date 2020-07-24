@@ -35,7 +35,7 @@ const runServer = () => {
     let depth = req.query.depth
     if(!id || !token) {
       res.status(500).send("user token and fileId needed!!!");
-    }else{
+    } else {
       let figmaData = await fetchProject(id, token, nodeIds, depth);
       figmaData['headers'] = { token: token, id: id };
       fs.writeFileSync('./data', JSON.stringify(figmaData, null, 2), 'utf-8');
@@ -66,7 +66,7 @@ const runServer = () => {
       return
     }
     if(!data.nodes) {
-      res.status(400).send('invalid data!')
+      res.status(400).send('No node ids!')
       return
     }
     let finalCss = ''
@@ -82,7 +82,6 @@ const runServer = () => {
         return 
       }
     }
-    console.log('finalCss: ', finalCss)
     finalCss = finalCss ? finalCss : 'No css styles found in the object' 
     res.send(finalCss)
   });
