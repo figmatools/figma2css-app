@@ -5,13 +5,10 @@ const express = require('express'),
   cors = require('cors'),
   bodyParser = require('body-parser'),
   open = require('open'),
-  program = require('commander'),
   path = require('path'),
   fs = require('fs'),
   transformCss = require('figma2css-module'),
-  reload = require('reload'),
-  watchFront = require('./watch-front'),
-  transformCssAlternative = require('./transformCssAlternative')
+  reload = require('reload');
 
 
 const fetchProject = require('figmafetch-module');
@@ -96,13 +93,4 @@ const runServer = () => {
   //open('http://localhost:4200/')
 };
 
-program
-  .description('run server!')
-  .option('-d, --dev', 'devmod watch and reload')
-  .action(async function(cmd) {
-    if(cmd.dev)
-      watchFront()
-    runServer()
-  });
-
-program.parse(process.argv);
+runServer();

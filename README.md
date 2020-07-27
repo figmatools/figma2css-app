@@ -44,3 +44,13 @@ or **Watch** to watch the figma file and generate the css everytime the figma fi
 
 and that's it enjoy
 
+
+# Development
+
+For development run
+```
+npm run frontend
+npm run backend
+```
+
+go to localhost:5000
