@@ -11,29 +11,35 @@
   let isWatching = false
 
   let loading = false,
+      treeData = '',
       data = '',
       figmaToken = '',
       fileId = '',
       resultCss
 
-
-  const loadTreeView = async () => {
-    if(!fileId || !figmaToken) return
-    loading = true
+  const loadData = async () => {
     try {
       data = (
         await (
           await fetch(`${baseUrl}/data?fileId=${fileId}&figmaToken=${figmaToken}`)
         ).json()
       )
-    }catch(err) { console.error(err) }
+      return data;
+    } catch(err) { console.error(err) }
+  }
+
+
+  const loadTreeView = async () => {
+    if(!fileId || !figmaToken) return
+    loading = true
+    treeData = await loadData(); 
     loading = false
 	}
 
   const getCheckedIds = (data) => {
     let checkedIds = []
     if(data.isChecked)
-      checkedIds.push(data.id)
+      checkedIds.push(data)
     if(data.children) {
       data.children.forEach(child => {
         checkedIds = checkedIds.concat(getCheckedIds(child))
@@ -47,13 +53,15 @@
     return !regex.test(name);
   };
 
-  const getIds = (data) => {
+  const getCheckedNodes = (data) => {
     let result = []
     data.forEach(child => {
       result = getCheckedIds(child)
     })
     return result
   }
+
+	let lastModified = new Date("1900-05-24T02:34:14.475592Z")
 
   let watchInterval = false;
   const watch = async () => {
@@ -62,7 +70,6 @@
       isWatching = false
       return;
     }
-		let lastModified = new Date("1900-05-24T02:34:14.475592Z")
     let i = 0;
     isWatching = true
     watchInterval = setInterval(async () => {
@@ -70,31 +77,63 @@
         i++
         return;
       }
-      try {
-        let result = (
-          await (
-            await fetch(`${baseUrl}/data?figmaToken=${figmaToken}&fileId=${fileId}&depth=1`)
-          ).json()
-        )
-				let currentLastModified = new Date(result.lastModified)
-        if(currentLastModified > lastModified) {
-          await generateCss()
-          lastModified = currentLastModified
-        }
-      } catch(err) { console.error(err) }
+      if(await shouldUpdateData()) {
+        await generateCss()
+      }
     }, 5000)
   } 
 
+  const shouldUpdateData = async () => {
+    try {
+      let result = (
+        await (
+          await fetch(`${baseUrl}/data?figmaToken=${figmaToken}&fileId=${fileId}&depth=1`)
+        ).json()
+      )
+
+      let currentLastModified = new Date(result.lastModified)
+      if(currentLastModified > lastModified) {
+        lastModified = currentLastModified
+        return true;
+      } else {
+        return false;
+      }
+    } catch(err) { 
+      console.error(err) 
+      return false
+    }
+  }
+
   const generateCss = async () => {
-    if(!data) return;
     loading = true
-    let checkedIds = getIds(data.document.children)
-    if(!checkedIds.length) return
-    // TODO: parametrize filePath and cssAttributes. Both should be adv configs on the interface.
+    if(await shouldUpdateData()) {
+      await loadData();
+    }
+    if(!data) return;
+    let checkedNodes = getCheckedNodes(treeData.document.children)
+    if(!checkedNodes.length) {
+      console.error('No checked items!')
+      loading = false
+      return
+    }
+
+    let url = `${baseUrl}/css`;
+    if(filePath) 
+      url += `?filePath=${filePath}`
+
     try {
       resultCss = (
         await (
-          await fetch(`${baseUrl}/css?figmaToken=${figmaToken}&fileId=${fileId}&nodeIds=${checkedIds.join(',')}&filePath=${filePath}`)
+          await fetch(url, {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+              nodes: checkedNodes 
+            })
+          })
         ).text()
       )
     } catch(err) { console.error(err) }
@@ -154,7 +193,7 @@
   </div>
   <div class="flex relative h-100 w-100">
     <div class="w7 bg-light-gray overflow-auto">
-      <TreeView treeData={data} />
+      <TreeView treeData={treeData} />
     </div>
     <div class="w-100 h-100 pa3 flex justify-center">
       <textarea class="w-100 h-100" bind:value={resultCss}></textarea>

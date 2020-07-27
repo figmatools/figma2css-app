@@ -50,26 +50,22 @@ const runServer = () => {
     res.status(500).send("");
   });
 
-  app.get('/css', async function (req, res) {
-    // ?figmaToken=[token]&fileId=[id]&nodeIds=1:36,1:24&depth=1
-    const id = req.query.fileId,
-      token = req.query.figmaToken,
-      nodeIds = req.query.nodeIds ? req.query.nodeIds.split(',') : [],
-      resultFilePath = req.query.filePath
+  app.post('/css', async function (req, res) {
+    // ?filePath=/home/mmc/docs/test.css
+    const resultFilePath = req.query.filePath
+    const nodes = req.body.nodes
 
-    const data = await fetchProject(id, token, nodeIds)
-    if(!data) {
-      res.status(400).send('no data was found!')
-      return
-    }
-    if(!data.nodes) {
+    if(!nodes) {
       res.status(400).send('No node ids!')
       return
     }
     let finalCss = ''
-    Object.keys(data.nodes).forEach((key) => {
-      finalCss += transformCss(data.nodes[key].document)
-    })
+    nodes.forEach((node) => {
+      if(node)
+        finalCss += transformCss(node)
+      else
+        console.log(`node ${node.id} has no data!`)
+    });
     if(resultFilePath) {
       try {
         fs.writeFileSync(resultFilePath, finalCss, 'utf-8')
