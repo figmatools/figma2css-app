@@ -130,15 +130,18 @@
 
   <div class="flex justify-between items-end bb b--light-gray ph4 pv3">
     <div class="flex">
-      <Input label={'Figma Acess Token*'} bind:value={figmaToken} id={'figmaToken'} />
-      <Input label={'File Id*'} bind:value={fileId} id={'fileId'} />
+      <Input id={'figmaToken'} label={'Figma Access Token*'} 
+        bind:value={figmaToken} placeholder="Figma Access Token"  />
+      <Input id={'fileId'} label={'File Id*'} 
+        bind:value={fileId} placeholder="File Id*" />
     </div>
     <button on:click={loadTreeView} class="bn bg-green white br2 h2 f7 w5 pointer">
       Load Data
     </button>
   </div>
   <div class="flex items-center justify-between bb b--light-gray ph4 pv2">
-    <Input label={'Full Output Path'} bind:value={filePath} />
+    <Input  id={'output-path'} label={'Full Output Path'} 
+      bind:value={filePath} placeholder="Full Output Path" />
     <p class="pa0 ma0 f7">Name the destination file, select the nodes in the treeview and click generate</p>
     <button on:click={generateCss}
       class="bn bg-green white br2 h2 f7 w5 pointer">
@@ -150,7 +153,7 @@
     </button>
   </div>
   <div class="flex relative h-100 w-100">
-    <div class="min-w6 bg-light-gray overflow-auto">
+    <div class="w7 bg-light-gray overflow-auto">
       <TreeView treeData={data} />
     </div>
     <div class="w-100 h-100 pa3 flex justify-center">
