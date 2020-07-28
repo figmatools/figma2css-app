@@ -67,7 +67,6 @@ const runServer = () => {
 
   app.get('/cached-credentials', async (req, res) => {
     let data = readFileData();
-    console.log('after readData')
     if(data.headers) {
       data = data['headers'];
       res.send(data);
