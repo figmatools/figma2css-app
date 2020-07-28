@@ -25,46 +25,67 @@ const runServer = () => {
 
   app.get('/data', async function (req, res) {
     // ?figmaToken=[token]&fileId=[id]&nodeIds=1:36,1:24&depth=1
-    let id = req.query.fileId;
-    let token = req.query.figmaToken;
+    let { fileId, figmaToken, writeData } = req.query;
     let nodeIds =
       req.query.nodeIds ? req.query.nodeIds.split(',') : [];
     let depth = req.query.depth
-    if(!id || !token) {
+    if(!fileId || !figmaToken) {
       res.status(500).send("user token and fileId needed!!!");
     } else {
-      let figmaData = await fetchProject(id, token, nodeIds, depth);
-      figmaData['headers'] = { token: token, id: id };
-      fs.writeFileSync('./data', JSON.stringify(figmaData, null, 2), 'utf-8');
+      let figmaData = await fetchProject(fileId, figmaToken, nodeIds, depth);
+      figmaData['headers'] = { figmaToken: figmaToken, fileId: fileId };
+      if(writeData === 'true') {
+        fs.writeFileSync('./data', JSON.stringify(figmaData, null, 2), 'utf-8');
+      }
       res.send(figmaData);
     }
   });
 
-  app.get('/cached-credentials', async (req, res) => {
+  const readFileData = () => {
     try {
       let data = JSON.parse(fs.readFileSync('./data'));
-      data = data['headers'];
-      res.send(data);
-      return
-    } catch (e) {}
-    res.status(500).send("");
+      return data;
+    } catch (e) {
+      console.error('error when reading file data!: ', e);
+    }
+  }
+
+  const findNodes = (ids, data) => {
+    let nodes = [];
+    for(let child of data.children) {
+      if(ids.includes(child.id)) {
+        nodes.push(child);   
+      }
+      
+      if(child.children && child.children.length) {
+        nodes = nodes.concat(findNodes(ids, child));
+      }
+    } 
+    return nodes;
+  }
+
+  app.get('/cached-credentials', async (req, res) => {
+    let data = readFileData();
+    data = data['headers'];
+    res.send(data);
   });
 
   app.post('/css', async function (req, res) {
     // ?filePath=/home/mmc/docs/test.css
     const resultFilePath = req.query.filePath
-    const nodes = req.body.nodes
+    const ids = req.body.ids
 
-    if(!nodes) {
-      res.status(400).send('No node ids!')
+    if(!ids) {
+      res.status(400).send('No ids were selected!')
       return
     }
+    let data = readFileData();
+    let nodes = findNodes(ids, data.document);
     let finalCss = ''
     nodes.forEach((node) => {
-      if(node)
-        finalCss += transformCss(node)
-      else
-        console.log(`node ${node.id} has no data!`)
+      let resultCss = transformCss(node);
+      if(resultCss) 
+        finalCss += resultCss
     });
     if(resultFilePath) {
       try {
