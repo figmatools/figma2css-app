@@ -9,7 +9,7 @@
     "backend-test": "node ./__test__/endpoints.js",
     "frontend": "rollup -c -w",
     "build": "rollup -c",
-    "start": "sirv public"
+    "start": "sirv ./public"
   },
   "keywords": [],
   "author": "",

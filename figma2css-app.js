@@ -47,6 +47,7 @@ const runServer = () => {
       return data;
     } catch (e) {
       console.error('error when reading file data!: ', e);
+      return {};
     }
   }
 
@@ -66,8 +67,13 @@ const runServer = () => {
 
   app.get('/cached-credentials', async (req, res) => {
     let data = readFileData();
-    data = data['headers'];
-    res.send(data);
+    console.log('after readData')
+    if(data.headers) {
+      data = data['headers'];
+      res.send(data);
+    } else {
+      res.status(404).send('no cached data');
+    }
   });
 
   app.post('/css', async function (req, res) {

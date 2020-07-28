@@ -144,11 +144,14 @@
     loading = true
     try {
       let result = await fetch(`${baseUrl}/cached-credentials`)
-      result = await result.json();
-      fileId = result.fileId;
-      figmaToken = result.figmaToken;
-			fileId = result.id
-			figmaToken = result.token
+      console.log('result: ', result);
+      if(result.status === 200) {
+        result = await result.json();
+        fileId = result.fileId;
+        figmaToken = result.figmaToken;
+        fileId = result.id
+        figmaToken = result.token
+      } 
     }catch(err) { console.error(err) }
     loading = false
   }
