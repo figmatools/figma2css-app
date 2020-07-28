@@ -10,7 +10,7 @@ you just need to map them and generate the css
 
 We found that a mixture of generating automacally and also including your own css is the best approach in most cases
 
-We're currently working in the css transformation itself to make it more efficient and precise
+We're currently working in the css transformation itself to make it more efficient and accurate
 
 ##How to use it
 
