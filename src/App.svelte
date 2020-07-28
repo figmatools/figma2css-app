@@ -21,7 +21,7 @@
     try {
       data = (
         await (
-          await fetch(`${baseUrl}/data?fileId=${fileId}&figmaToken=${figmaToken}`)
+          await fetch(`${baseUrl}/data?fileId=${fileId}&figmaToken=${figmaToken}&writeData=true`)
         ).json()
       )
       return data;
@@ -87,7 +87,7 @@
     try {
       let result = (
         await (
-          await fetch(`${baseUrl}/data?figmaToken=${figmaToken}&fileId=${fileId}&depth=1`)
+          await fetch(`${baseUrl}/data?figmaToken=${figmaToken}&fileId=${fileId}&depth=1&writeData=false`)
         ).json()
       )
 
@@ -131,7 +131,7 @@
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
-              nodes: checkedNodes 
+              ids: checkedNodes.map((node) => node.id) 
             })
           })
         ).text()
@@ -145,6 +145,7 @@
     try {
       let result = await fetch(`${baseUrl}/cached-credentials`)
       result = await result.json()
+      { fileId, figmaToken } = result;
 			fileId = result.id
 			figmaToken = result.token
     }catch(err) { console.error(err) }
