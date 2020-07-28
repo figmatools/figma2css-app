@@ -9,7 +9,8 @@
     "backend-test": "node ./__test__/endpoints.js",
     "frontend": "rollup -c -w",
     "build": "rollup -c",
-    "start": "sirv ./public"
+    "start": "sirv ./public",
+    "figma2css": "node ./figma2css-app.js"
   },
   "keywords": [],
   "author": "",
