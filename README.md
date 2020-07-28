@@ -1,5 +1,8 @@
 #figma2css-app
 
+# Attention
+this project is in a very early stage, a lot of things need to be improved, issues are welcome :D
+
 # Use cases
 
 This is very usefull for components or pages that babely change between projects, so you don't have to change the styles everytime
