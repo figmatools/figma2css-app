@@ -1,6 +1,8 @@
-#figma2css-app
+# figma2css-app
 
-## Extract figma styles to your code
+Extract figma styles to your code
+
+![figma2css](https://marcell-assets.s3-sa-east-1.amazonaws.com/figma2css-gif.gif)
 
 # Attention
 this project is in a very early stage, a lot of things need to be improved, issues are welcome :D
@@ -49,7 +51,7 @@ how is working.
 
 you can see an example file here https://www.figma.com/file/SGzkSxkP3pnZQrh9pzn6mf/FigmaTools?node-id=0%3A1
 
-any question just hit me up @____Marcell
+any question just hit me up 0000marcell@gmail.com
 
 # Watch mode
 
@@ -65,6 +67,10 @@ Then click **generate css** to generate the css once
 or **Watch** to watch the figma file and generate the css everytime the figma file changes
 
 and that's it enjoy
+
+# figma2react
+
+https://github.com/0000marcell/figma2react
 
 
 # Development
