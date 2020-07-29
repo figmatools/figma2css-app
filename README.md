@@ -1,5 +1,7 @@
 #figma2css-app
 
+## Extract figma styles to your code
+
 # Attention
 this project is in a very early stage, a lot of things need to be improved, issues are welcome :D
 
@@ -40,6 +42,17 @@ you can put the output path of the generated css file e.g:
 ```
 /home/mmc/my-project/css/figma-generated-css.css
 ```
+
+The name of the elements that you want to transform need to be a css class or a id, e.g in your figma file .button or #button,
+we're planing to change that in the future, maybe do a transformation of the name to match the css class that you want, but for now, this is 
+how is working.
+
+you can see an example file here https://www.figma.com/file/SGzkSxkP3pnZQrh9pzn6mf/FigmaTools?node-id=0%3A1
+
+any question just hit me up @____Marcell
+
+# Watch mode
+
 if you're running watch mode everytime that the figma file change this file will be changed too :smile:
 
 Click load Data to load the treeview with all the figma elements
@@ -68,3 +81,6 @@ go to localhost:5000
 improve css transformation
 create electron desktop app for mac, linux and windows
 change the name of the selected element in figma to a class e.g: Button to .button
+increase the size of the inputs
+better error handling
+authentication with oauth2
