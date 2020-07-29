@@ -12,7 +12,7 @@ We found that a mixture of generating automacally and also including your own cs
 
 We're currently working in the css transformation itself to make it more efficient and accurate
 
-##How to use it
+# How to use it
 
 ```
 git clone git@github.com:figmatools/figma2css-app.git 
@@ -62,7 +62,7 @@ npm run backend
 
 go to localhost:5000
 
-#TODO
+# TODO
 improve css transformation
 create electron desktop app for mac, linux and windows
 change the name of the selected element in figma to a class e.g: Button to .button
