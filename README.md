@@ -4,8 +4,8 @@ Extract figma styles to your code
 
 ![figma2css](https://marcell-assets.s3-sa-east-1.amazonaws.com/figma2css-gif.gif)
 
-# Attention
-this project is in a very early stage, a lot of things need to be improved, issues are welcome :D
+# Warning
+> this project is in a very early stage, a lot of things need to be improved, issues are welcome :D
 
 # Use cases
 
@@ -84,9 +84,9 @@ npm run backend
 go to localhost:5000
 
 # TODO
-improve css transformation
-create electron desktop app for mac, linux and windows
-change the name of the selected element in figma to a class e.g: Button to .button
-increase the size of the inputs
-better error handling
-authentication with oauth2
+
+- [ ] Create electron desktop app for mac, linux and windows
+- [ ] Change the name of the selected element in figma to a class e.g: Button to .button
+- [ ] Increase the size of the inputs
+- [ ] Better error handling
+- [ ] Authentication with oauth2
