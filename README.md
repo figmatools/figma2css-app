@@ -15,11 +15,13 @@ We're currently working in the css transformation itself to make it more efficie
 ##How to use it
 
 ```
-npm i -g figma2css-app
-figma2css-app
+git clone git@github.com:figmatools/figma2css-app.git 
+cd figma2css-app
+npm i
+npm run figma2css
 ```
 
-open your browser in port 5000
+open you browser http://localhost:4200/
 
 # Figma Access token:
 how to get an access token:
@@ -59,3 +61,8 @@ npm run backend
 ```
 
 go to localhost:5000
+
+#TODO
+improve css transformation
+create electron desktop app for mac, linux and windows
+change the name of the selected element in figma to a class e.g: Button to .button
