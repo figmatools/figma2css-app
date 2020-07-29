@@ -14,6 +14,8 @@ We're currently working in the css transformation itself to make it more efficie
 
 # How to use it
 
+Assuming you have node and npm installed
+
 ```
 git clone git@github.com:figmatools/figma2css-app.git 
 cd figma2css-app
