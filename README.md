@@ -1,4 +1,4 @@
-# figma2css-app
+# Figma2css
 
 # Extract figma styles to your code
 
