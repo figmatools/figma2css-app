@@ -23,12 +23,21 @@ const runServer = () => {
     res.sendFile(path.join(__dirname+'/public/index.html'));
   });
 
+  const extractFileId = (fileURL) => {
+    let result = fileURL.match(/file\/(.*?)\//)
+    if(result[1])
+      return result[1]
+    else
+      return false
+  }
+
   app.get('/data', async function (req, res) {
-    // ?figmaToken=[token]&fileId=[id]&nodeIds=1:36,1:24&depth=1
-    let { fileId, figmaToken, writeData } = req.query;
+    // ?figmaToken=[token]&fileURL=[fileURL]&nodeIds=1:36,1:24&depth=1
+    let { fileURL, figmaToken, writeData } = req.query;
     let nodeIds =
       req.query.nodeIds ? req.query.nodeIds.split(',') : [];
     let depth = req.query.depth
+    let fileId = extractFileId(fileURL);
     if(!fileId || !figmaToken) {
       res.status(500).send("user token and fileId needed!!!");
     } else {

@@ -3343,13 +3343,14 @@ code, .code { font-family: Consolas, monaco, monospace; }
   box-sizing: border-box;
 }
 
-
-// extras
+.w7 {
+  width: 25rem;
+}
 
 .w6 {
   width: 250px;
 }
 
-.w7 {
-  width: 25rem;
+.ew8 {
+  width: 517px;
 }

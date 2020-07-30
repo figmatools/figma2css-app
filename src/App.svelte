@@ -2,7 +2,6 @@
   import baseUrl from './base-url.js'
 	import TreeView from './TreeView.svelte';
   import Input from './Input.svelte'
-  import Button from './Button.svelte'
 	import { onMount } from 'svelte';
 	import CSSGenerator from "./CSSGenerator.svelte";
 
@@ -14,14 +13,36 @@
       treeData = '',
       data = '',
       figmaToken = '',
-      fileId = '',
+      fileURL = '',
       resultCss
 
+  let figmaTokenError = '',
+    fileURLError = '',
+    outputPathError = '';
+
+
+  const extractFileId = (fileURL) => {
+    let result = fileURL.match(/file\/(.*?)\//)
+    if(result[1])
+      return result[1]
+    else
+      return false
+  }
+
+  const isURLValid = (fileURL) => {
+    let result = fileURL.match(/file\/(.*?)\//)
+    if(result[1])
+      return true
+    else
+      return false
+  } 
+
   const loadData = async () => {
+
     try {
       data = (
         await (
-          await fetch(`${baseUrl}/data?fileId=${fileId}&figmaToken=${figmaToken}&writeData=true`)
+          await fetch(`${baseUrl}/data?fileURL=${fileURL}&figmaToken=${figmaToken}&writeData=true`)
         ).json()
       )
       return data;
@@ -30,7 +51,7 @@
 
 
   const loadTreeView = async () => {
-    if(!fileId || !figmaToken) return
+    if(!fileURL || !figmaToken) return
     loading = true
     treeData = await loadData(); 
     loading = false
@@ -84,6 +105,11 @@
   } 
 
   const shouldUpdateData = async () => {
+    let fileId = extractFileId(fileURL);
+    if(!fileId) {
+      fileURlError = "Invalid file";
+      return;
+    }
     try {
       let result = (
         await (
@@ -144,13 +170,10 @@
     loading = true
     try {
       let result = await fetch(`${baseUrl}/cached-credentials`)
-      console.log('result: ', result);
       if(result.status === 200) {
         result = await result.json();
-        fileId = result.fileId;
+        fileURL = result.fileURL;
         figmaToken = result.figmaToken;
-        fileId = result.id
-        figmaToken = result.token
       } 
     }catch(err) { console.error(err) }
     loading = false
@@ -175,26 +198,33 @@
   <div class="flex justify-between items-end bb b--light-gray ph4 pv3">
     <div class="flex">
       <Input id={'figmaToken'} label={'Figma Access Token*'} 
-        bind:value={figmaToken} placeholder="Figma Access Token"  />
-      <Input id={'fileId'} label={'File Id*'} 
-        bind:value={fileId} placeholder="File Id*" />
+        bind:value={figmaToken} placeholder="Figma Access Token"  
+        error={figmaTokenError} />
+      <Input id={'fileURL'} label={'File URL*'} 
+        bind:value={fileURL} placeholder="File URL*" 
+        error={fileURLError}
+      />
     </div>
-    <button on:click={loadTreeView} class="bn bg-green white br2 h2 f7 w5 pointer">
+    <button on:click={loadTreeView} class="bn bg-green white br2 h2 f7 w4 pointer">
       Load Data
     </button>
   </div>
   <div class="flex items-center justify-between bb b--light-gray ph4 pv2">
-    <Input  id={'output-path'} label={'Full Output Path'} 
-      bind:value={filePath} placeholder="Full Output Path" />
+    <Input  css="ew8" id={'output-path'} label={'Full Output Path'} 
+      bind:value={filePath} placeholder="Full Output Path" 
+      error={outputPathError} 
+    />
     <p class="pa0 ma0 f7">Name the destination file, select the nodes in the treeview and click generate</p>
-    <button on:click={generateCss}
-      class="bn bg-green white br2 h2 f7 w5 pointer">
-      Generate CSS
-    </button>
-    <button on:click={watch}
-      class={`${isWatching ? 'bg-red' : 'bg-green'} bn white br2 h2 f7 w5 pointer`}>
-      {isWatching ? 'Stop Watching!' : 'Watch'}
-    </button>
+    <div class="flex">
+      <button on:click={generateCss}
+        class="mr3 bn bg-green white br2 h2 f7 w4 pointer">
+        Generate CSS
+      </button>
+      <button on:click={watch}
+        class={`${isWatching ? 'bg-red' : 'bg-green'} bn white br2 h2 f7 w4 pointer`}>
+        {isWatching ? 'Stop Watching!' : 'Watch'}
+      </button>
+    </div>
   </div>
   <div class="flex relative h-100 w-100">
     <div class="w7 bg-light-gray overflow-auto">
