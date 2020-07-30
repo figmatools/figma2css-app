@@ -42,7 +42,6 @@ const runServer = () => {
       res.status(500).send("user token and fileId needed!!!");
     } else {
       let figmaData = await fetchProject(fileId, figmaToken, nodeIds, depth);
-      figmaData['headers'] = { figmaToken: figmaToken, fileId: fileId };
       if(writeData === 'true') {
         fs.writeFileSync('./data', JSON.stringify(figmaData, null, 2), 'utf-8');
       }
@@ -73,16 +72,6 @@ const runServer = () => {
     } 
     return nodes;
   }
-
-  app.get('/cached-credentials', async (req, res) => {
-    let data = readFileData();
-    if(data.headers) {
-      data = data['headers'];
-      res.send(data);
-    } else {
-      res.status(404).send('no cached data');
-    }
-  });
 
   app.post('/css', async function (req, res) {
     // ?filePath=/home/mmc/docs/test.css

@@ -38,7 +38,7 @@
   } 
 
   const loadData = async () => {
-
+    saveInputValuesInLocalStorage();
     try {
       data = (
         await (
@@ -99,21 +99,23 @@
         return;
       }
       if(await shouldUpdateData()) {
+        loading = true
+        await loadData()
         await generateCss()
+        loading = false
       }
-    }, 5000)
+    }, 1000)
   } 
 
   const shouldUpdateData = async () => {
-    let fileId = extractFileId(fileURL);
-    if(!fileId) {
-      fileURlError = "Invalid file";
+    if(!fileURL) {
+      fileURLError = "Invalid file";
       return;
     }
     try {
       let result = (
         await (
-          await fetch(`${baseUrl}/data?figmaToken=${figmaToken}&fileId=${fileId}&depth=1&writeData=false`)
+          await fetch(`${baseUrl}/data?figmaToken=${figmaToken}&fileURL=${fileURL}&depth=1&writeData=false`)
         ).json()
       )
 
@@ -130,16 +132,20 @@
     }
   }
 
-  const generateCss = async () => {
+  const generate = async () => {
     loading = true
     if(await shouldUpdateData()) {
       await loadData();
     }
+    await generateCss()
+    loading = false
+  } 
+
+  const generateCss = async () => {
     if(!data) return;
     let checkedNodes = getCheckedNodes(treeData.document.children)
     if(!checkedNodes.length) {
       console.error('No checked items!')
-      loading = false
       return
     }
 
@@ -163,24 +169,23 @@
         ).text()
       )
     } catch(err) { console.error(err) }
-    loading = false
   }
 
-  const getSavedCredentials = async () => {
-    loading = true
-    try {
-      let result = await fetch(`${baseUrl}/cached-credentials`)
-      if(result.status === 200) {
-        result = await result.json();
-        fileURL = result.fileURL;
-        figmaToken = result.figmaToken;
-      } 
-    }catch(err) { console.error(err) }
-    loading = false
+  const saveInputValuesInLocalStorage = () => {
+    window.localStorage.setItem('figmaToken', figmaToken);
+    window.localStorage.setItem('fileURL', fileURL);
+    window.localStorage.setItem('filePath', filePath);
   }
+
+  const loadCachedValues = () => {
+    figmaToken = window.localStorage.getItem('figmaToken');
+    fileURL = window.localStorage.getItem('fileURL');
+    filePath = window.localStorage.getItem('filePath');
+    return { figmaToken, fileURL, filePath };
+  } 
 
 	onMount(async () => {
-    await getSavedCredentials();
+    loadCachedValues();
 	})
 </script>
 
@@ -195,12 +200,12 @@
     </div>
   {/if}
 
-  <div class="flex justify-between items-end bb b--light-gray ph4 pv3">
+  <div class="flex justify-between items-center bb b--light-gray ph4 pv3">
     <div class="flex">
       <Input id={'figmaToken'} label={'Figma Access Token*'} 
         bind:value={figmaToken} placeholder="Figma Access Token"  
         error={figmaTokenError} />
-      <Input id={'fileURL'} label={'File URL*'} 
+      <Input css="ew8" id={'fileURL'} label={'File URL*'} 
         bind:value={fileURL} placeholder="File URL*" 
         error={fileURLError}
       />
@@ -214,9 +219,9 @@
       bind:value={filePath} placeholder="Full Output Path" 
       error={outputPathError} 
     />
-    <p class="pa0 ma0 f7">Name the destination file, select the nodes in the treeview and click generate</p>
+    <p class="pa0 ma0 f7">Select the css file output, select the nodes in the treeview and click generate</p>
     <div class="flex">
-      <button on:click={generateCss}
+      <button on:click={generate}
         class="mr3 bn bg-green white br2 h2 f7 w4 pointer">
         Generate CSS
       </button>

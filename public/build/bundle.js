@@ -1407,7 +1407,7 @@ var app = (function () {
     const { console: console_1 } = globals;
     const file$4 = "src/App.svelte";
 
-    // (190:2) {#if loading}
+    // (195:2) {#if loading}
     function create_if_block$1(ctx) {
     	let div;
     	let img;
@@ -1420,9 +1420,9 @@ var app = (function () {
     			attr_dev(img, "class", "w2 h2");
     			if (img.src !== (img_src_value = "https://i.ya-webdesign.com/images/loading-png-gif.gif")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "loading");
-    			add_location(img, file$4, 191, 6, 4297);
+    			add_location(img, file$4, 196, 6, 4520);
     			attr_dev(div, "class", "bg-white-50 fixed w-100 h-100 z-999 flex justify-center items-center");
-    			add_location(div, file$4, 190, 4, 4208);
+    			add_location(div, file$4, 195, 4, 4431);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -1437,7 +1437,7 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(190:2) {#if loading}",
+    		source: "(195:2) {#if loading}",
     		ctx
     	});
 
@@ -1484,14 +1484,14 @@ var app = (function () {
     	let if_block = /*loading*/ ctx[2] && create_if_block$1(ctx);
 
     	function input0_value_binding(value) {
-    		/*input0_value_binding*/ ctx[24].call(null, value);
+    		/*input0_value_binding*/ ctx[26].call(null, value);
     	}
 
     	let input0_props = {
     		id: "figmaToken",
     		label: "Figma Access Token*",
     		placeholder: "Figma Access Token",
-    		error: /*figmaTokenError*/ ctx[7]
+    		error: /*figmaTokenError*/ ctx[8]
     	};
 
     	if (/*figmaToken*/ ctx[4] !== void 0) {
@@ -1502,14 +1502,15 @@ var app = (function () {
     	binding_callbacks.push(() => bind(input0, "value", input0_value_binding));
 
     	function input1_value_binding(value) {
-    		/*input1_value_binding*/ ctx[25].call(null, value);
+    		/*input1_value_binding*/ ctx[27].call(null, value);
     	}
 
     	let input1_props = {
+    		css: "ew8",
     		id: "fileURL",
     		label: "File URL*",
     		placeholder: "File URL*",
-    		error: /*fileURLError*/ ctx[8]
+    		error: /*fileURLError*/ ctx[7]
     	};
 
     	if (/*fileURL*/ ctx[5] !== void 0) {
@@ -1520,7 +1521,7 @@ var app = (function () {
     	binding_callbacks.push(() => bind(input1, "value", input1_value_binding));
 
     	function input2_value_binding(value) {
-    		/*input2_value_binding*/ ctx[26].call(null, value);
+    		/*input2_value_binding*/ ctx[28].call(null, value);
     	}
 
     	let input2_props = {
@@ -1565,7 +1566,7 @@ var app = (function () {
     			create_component(input2.$$.fragment);
     			t6 = space();
     			p = element("p");
-    			p.textContent = "Name the destination file, select the nodes in the treeview and click generate";
+    			p.textContent = "Select the css file output, select the nodes in the treeview and click generate";
     			t8 = space();
     			div2 = element("div");
     			button1 = element("button");
@@ -1584,33 +1585,33 @@ var app = (function () {
     			create_component(cssgenerator.$$.fragment);
     			t15 = space();
     			footer = element("footer");
-    			add_location(header, file$4, 187, 2, 4167);
+    			add_location(header, file$4, 192, 2, 4390);
     			attr_dev(div0, "class", "flex");
-    			add_location(div0, file$4, 198, 4, 4504);
+    			add_location(div0, file$4, 203, 4, 4730);
     			attr_dev(button0, "class", "bn bg-green white br2 h2 f7 w4 pointer");
-    			add_location(button0, file$4, 207, 4, 4843);
-    			attr_dev(div1, "class", "flex justify-between items-end bb b--light-gray ph4 pv3");
-    			add_location(div1, file$4, 197, 2, 4430);
+    			add_location(button0, file$4, 212, 4, 5079);
+    			attr_dev(div1, "class", "flex justify-between items-center bb b--light-gray ph4 pv3");
+    			add_location(div1, file$4, 202, 2, 4653);
     			attr_dev(p, "class", "pa0 ma0 f7");
-    			add_location(p, file$4, 216, 4, 5208);
+    			add_location(p, file$4, 221, 4, 5444);
     			attr_dev(button1, "class", "mr3 bn bg-green white br2 h2 f7 w4 pointer");
-    			add_location(button1, file$4, 218, 6, 5342);
+    			add_location(button1, file$4, 223, 6, 5579);
     			attr_dev(button2, "class", button2_class_value = `${/*isWatching*/ ctx[1] ? "bg-red" : "bg-green"} bn white br2 h2 f7 w4 pointer`);
-    			add_location(button2, file$4, 222, 6, 5476);
+    			add_location(button2, file$4, 227, 6, 5710);
     			attr_dev(div2, "class", "flex");
-    			add_location(div2, file$4, 217, 4, 5317);
+    			add_location(div2, file$4, 222, 4, 5554);
     			attr_dev(div3, "class", "flex items-center justify-between bb b--light-gray ph4 pv2");
-    			add_location(div3, file$4, 211, 2, 4964);
+    			add_location(div3, file$4, 216, 2, 5200);
     			attr_dev(div4, "class", "w7 bg-light-gray overflow-auto");
-    			add_location(div4, file$4, 229, 4, 5720);
+    			add_location(div4, file$4, 234, 4, 5954);
     			attr_dev(textarea, "class", "w-100 h-100");
-    			add_location(textarea, file$4, 233, 6, 5875);
+    			add_location(textarea, file$4, 238, 6, 6109);
     			attr_dev(div5, "class", "w-100 h-100 pa3 flex justify-center");
-    			add_location(div5, file$4, 232, 4, 5819);
+    			add_location(div5, file$4, 237, 4, 6053);
     			attr_dev(div6, "class", "flex relative h-100 w-100");
-    			add_location(div6, file$4, 228, 2, 5676);
-    			add_location(footer, file$4, 237, 2, 5980);
-    			add_location(main, file$4, 186, 0, 4158);
+    			add_location(div6, file$4, 233, 2, 5910);
+    			add_location(footer, file$4, 242, 2, 6214);
+    			add_location(main, file$4, 191, 0, 4381);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1656,9 +1657,9 @@ var app = (function () {
     			if (!mounted) {
     				dispose = [
     					listen_dev(button0, "click", /*loadTreeView*/ ctx[10], false, false, false),
-    					listen_dev(button1, "click", /*generateCss*/ ctx[12], false, false, false),
+    					listen_dev(button1, "click", /*generate*/ ctx[12], false, false, false),
     					listen_dev(button2, "click", /*watch*/ ctx[11], false, false, false),
-    					listen_dev(textarea, "input", /*textarea_input_handler*/ ctx[27])
+    					listen_dev(textarea, "input", /*textarea_input_handler*/ ctx[29])
     				];
 
     				mounted = true;
@@ -1686,6 +1687,7 @@ var app = (function () {
 
     			input0.$set(input0_changes);
     			const input1_changes = {};
+    			if (dirty & /*fileURLError*/ 128) input1_changes.error = /*fileURLError*/ ctx[7];
 
     			if (!updating_value_1 && dirty & /*fileURL*/ 32) {
     				updating_value_1 = true;
@@ -1782,6 +1784,8 @@ var app = (function () {
     	};
 
     	const loadData = async () => {
+    		saveInputValuesInLocalStorage();
+
     		try {
     			data = await (await fetch(`${baseUrl}/data?fileURL=${fileURL}&figmaToken=${figmaToken}&writeData=true`)).json();
     			return data;
@@ -1846,23 +1850,24 @@ var app = (function () {
     				}
 
     				if (await shouldUpdateData()) {
+    					$$invalidate(2, loading = true);
+    					await loadData();
     					await generateCss();
+    					$$invalidate(2, loading = false);
     				}
     			},
-    			5000
+    			1000
     		);
     	};
 
     	const shouldUpdateData = async () => {
-    		let fileId = extractFileId(fileURL);
-
-    		if (!fileId) {
-    			fileURlError = "Invalid file";
+    		if (!fileURL) {
+    			$$invalidate(7, fileURLError = "Invalid file");
     			return;
     		}
 
     		try {
-    			let result = await (await fetch(`${baseUrl}/data?figmaToken=${figmaToken}&fileId=${fileId}&depth=1&writeData=false`)).json();
+    			let result = await (await fetch(`${baseUrl}/data?figmaToken=${figmaToken}&fileURL=${fileURL}&depth=1&writeData=false`)).json();
     			let currentLastModified = new Date(result.lastModified);
 
     			if (currentLastModified > lastModified) {
@@ -1877,19 +1882,23 @@ var app = (function () {
     		}
     	};
 
-    	const generateCss = async () => {
+    	const generate = async () => {
     		$$invalidate(2, loading = true);
 
     		if (await shouldUpdateData()) {
     			await loadData();
     		}
 
+    		await generateCss();
+    		$$invalidate(2, loading = false);
+    	};
+
+    	const generateCss = async () => {
     		if (!data) return;
     		let checkedNodes = getCheckedNodes(treeData.document.children);
 
     		if (!checkedNodes.length) {
     			console.error("No checked items!");
-    			$$invalidate(2, loading = false);
     			return;
     		}
 
@@ -1908,30 +1917,23 @@ var app = (function () {
     		} catch(err) {
     			console.error(err);
     		}
-
-    		$$invalidate(2, loading = false);
     	};
 
-    	const getSavedCredentials = async () => {
-    		$$invalidate(2, loading = true);
+    	const saveInputValuesInLocalStorage = () => {
+    		window.localStorage.setItem("figmaToken", figmaToken);
+    		window.localStorage.setItem("fileURL", fileURL);
+    		window.localStorage.setItem("filePath", filePath);
+    	};
 
-    		try {
-    			let result = await fetch(`${baseUrl}/cached-credentials`);
-
-    			if (result.status === 200) {
-    				result = await result.json();
-    				$$invalidate(5, fileURL = result.fileURL);
-    				$$invalidate(4, figmaToken = result.figmaToken);
-    			}
-    		} catch(err) {
-    			console.error(err);
-    		}
-
-    		$$invalidate(2, loading = false);
+    	const loadCachedValues = () => {
+    		$$invalidate(4, figmaToken = window.localStorage.getItem("figmaToken"));
+    		$$invalidate(5, fileURL = window.localStorage.getItem("fileURL"));
+    		$$invalidate(0, filePath = window.localStorage.getItem("filePath"));
+    		return { figmaToken, fileURL, filePath };
     	};
 
     	onMount(async () => {
-    		await getSavedCredentials();
+    		loadCachedValues();
     	});
 
     	const writable_props = [];
@@ -1991,8 +1993,10 @@ var app = (function () {
     		watchInterval,
     		watch,
     		shouldUpdateData,
+    		generate,
     		generateCss,
-    		getSavedCredentials
+    		saveInputValuesInLocalStorage,
+    		loadCachedValues
     	});
 
     	$$self.$inject_state = $$props => {
@@ -2004,8 +2008,8 @@ var app = (function () {
     		if ("figmaToken" in $$props) $$invalidate(4, figmaToken = $$props.figmaToken);
     		if ("fileURL" in $$props) $$invalidate(5, fileURL = $$props.fileURL);
     		if ("resultCss" in $$props) $$invalidate(6, resultCss = $$props.resultCss);
-    		if ("figmaTokenError" in $$props) $$invalidate(7, figmaTokenError = $$props.figmaTokenError);
-    		if ("fileURLError" in $$props) $$invalidate(8, fileURLError = $$props.fileURLError);
+    		if ("figmaTokenError" in $$props) $$invalidate(8, figmaTokenError = $$props.figmaTokenError);
+    		if ("fileURLError" in $$props) $$invalidate(7, fileURLError = $$props.fileURLError);
     		if ("outputPathError" in $$props) $$invalidate(9, outputPathError = $$props.outputPathError);
     		if ("lastModified" in $$props) lastModified = $$props.lastModified;
     		if ("watchInterval" in $$props) watchInterval = $$props.watchInterval;
@@ -2023,12 +2027,12 @@ var app = (function () {
     		figmaToken,
     		fileURL,
     		resultCss,
-    		figmaTokenError,
     		fileURLError,
+    		figmaTokenError,
     		outputPathError,
     		loadTreeView,
     		watch,
-    		generateCss,
+    		generate,
     		data,
     		lastModified,
     		watchInterval,
@@ -2039,7 +2043,9 @@ var app = (function () {
     		testFileName,
     		getCheckedNodes,
     		shouldUpdateData,
-    		getSavedCredentials,
+    		generateCss,
+    		saveInputValuesInLocalStorage,
+    		loadCachedValues,
     		input0_value_binding,
     		input1_value_binding,
     		input2_value_binding,
