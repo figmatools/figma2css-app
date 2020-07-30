@@ -1,8 +1,12 @@
 # figma2css-app
 
-Extract figma styles to your code
+# Extract figma styles to your code
 
 ![figma2css](https://marcell-assets.s3-sa-east-1.amazonaws.com/figma2css-gif.gif)
+
+# Watch Mode
+
+![figma2css](https://marcell-assets.s3-sa-east-1.amazonaws.com/figma2css-watch.gif)
 
 # Warning
 > this project is in a very early stage, a lot of things need to be improved, issues are welcome :D
